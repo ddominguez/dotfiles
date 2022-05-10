@@ -48,6 +48,7 @@ Plug 'saadparwaiz1/cmp_luasnip'
 call plug#end()
 
 
+let g:tokyonight_style = "night"
 colorscheme tokyonight
 
 " Load LSP
