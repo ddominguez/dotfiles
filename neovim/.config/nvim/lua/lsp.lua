@@ -87,7 +87,7 @@ cmp.setup({
         { name = 'buffer' },
     }),
     completion = {
-        keyword_length = 5
+        keyword_length = 1
     }
 })
 
