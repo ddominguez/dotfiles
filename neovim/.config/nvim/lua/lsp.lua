@@ -1,6 +1,7 @@
 -- Setup lspconfig.
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
  
+
 -- Mappings
 -- See `:help vim.diagnostic.*` for docs on any of the below functions
 local opts = { noremap=true, silent=true }
@@ -35,7 +36,7 @@ for _, lsp in pairs(servers) do
         flags = {
             -- default in neovim 0.7+
             debounce_text_changes = 150
-        }
+        },
     }
 end
 
@@ -43,11 +44,12 @@ vim.opt.completeopt = {"menu", "menuone", "noselect"}
 
 -- Setup nvim-cmp.
 local cmp = require'cmp'
+local luasnip = require'luasnip'
 
 cmp.setup({
     snippet = {
         expand = function(args)
-            require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+            luasnip.lsp_expand(args.body) -- For `luasnip` users.
         end,
     },
     window = {
@@ -59,11 +61,11 @@ cmp.setup({
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
         ['<C-Space>'] = cmp.mapping.complete(),
         ['<C-e>'] = cmp.mapping.abort(),
-        ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+        ['<CR>'] = cmp.mapping.confirm({ select = true }),
 --        ['<Tab>'] = cmp.mapping(function(fallback)
 --            if cmp.visible() then
 --                cmp.select_next_item()
---            elseif luasnip.expand_or_jumpable() then
+--            elseif luasnip and luasnip.expand_or_jumpable() then
 --                luasnip.expand_or_jump()
 --            else
 --                fallback()
@@ -72,7 +74,7 @@ cmp.setup({
 --        ['<S-Tab>'] = cmp.mapping(function(fallback)
 --            if cmp.visible() then
 --                cmp.select_prev_item()
---            elseif luasnip.jumpable(-1) then
+--            elseif luasnip and luasnip.jumpable(-1) then
 --                luasnip.jump(-1)
 --            else
 --                fallback()
