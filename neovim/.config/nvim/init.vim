@@ -18,14 +18,15 @@ set shiftwidth=4    " width for autoindents
 set autoindent      " indent new line
 set smartindent
 set number          " line numbers
+set relativenumber
 set nowrap
 
 set scrolloff=8
 set cmdheight=1
 set colorcolumn=80
 
-set wildmode=longest,list,full
-set wildmenu
+"set wildmode=longest,list,full
+"set wildmenu
 " ignore file patterns
 set wildignore+=*.pyc
 set wildignore+=**/__pycache__/**
