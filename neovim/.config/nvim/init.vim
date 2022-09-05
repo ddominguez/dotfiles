@@ -33,6 +33,8 @@ set wildignore+=**/__pycache__/**
 set wildignore+=**/node_modules/**
 set wildignore+=**/.git/**
 
+let mapleader = " "
+
 " Plugins
 call plug#begin()
 " Color scheme
@@ -46,12 +48,19 @@ Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
+
+" Telescope
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
 call plug#end()
 
 
 let g:tokyonight_style = "night"
 colorscheme tokyonight
 
-" Load LSP
+" Load LSP servers
 lua require('lsp')
 
+" Telescope settings
+lua require('telescope')
