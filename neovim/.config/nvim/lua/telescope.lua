@@ -4,3 +4,11 @@ vim.api.nvim_set_keymap('n', '<leader>fg', '<cmd>lua require("telescope.builtin"
 vim.api.nvim_set_keymap('n', '<leader>fb', '<cmd>lua require("telescope.builtin").buffers()<CR>', opts)
 vim.api.nvim_set_keymap('n', '<leader>fh', '<cmd>lua require("telescope.builtin").help_tags()<CR>', opts)
 
+--[[local telescope = require'telescope'
+telescope.setup({
+    defaults = {
+        file_ignore_patterns = { "node_modules" }
+    },
+})--]]
+
+
