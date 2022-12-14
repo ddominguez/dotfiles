@@ -16,7 +16,7 @@ set.scrolloff = 8
 set.cmdheight = 1
 set.colorcolumn = "80"
 
--- set.termguicolors = true
+set.termguicolors = true
 
 vim.g.mapleader = " "
 
