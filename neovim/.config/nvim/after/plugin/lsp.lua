@@ -6,7 +6,7 @@ lsp.preset("recommended")
 
 lsp.ensure_installed({
     "html",
-    "gopls",
+    -- "gopls",
     "pyright",
     "tsserver"
 })
