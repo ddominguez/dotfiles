@@ -28,4 +28,5 @@ return require("packer").startup(function(use)
             { "rafamadriz/friendly-snippets" },
         }
     }
+    use("nvim-lualine/lualine.nvim")
 end)
