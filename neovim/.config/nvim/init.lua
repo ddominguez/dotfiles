@@ -18,6 +18,8 @@ set.colorcolumn = "80"
 
 set.termguicolors = true
 
+set.mouse = ""
+
 vim.g.mapleader = " "
 
 
