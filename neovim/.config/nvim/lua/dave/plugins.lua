@@ -37,4 +37,5 @@ return require("packer").startup(function(use)
         run = ":TSUpdate"
     }
     use("tpope/vim-fugitive")
+    use("lewis6991/gitsigns.nvim")
 end)
