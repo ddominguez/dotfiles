@@ -1,13 +1,11 @@
-vim.opt.signcolumn = "yes"
-
 local lsp = require("lsp-zero")
 
 lsp.preset("recommended")
 
 lsp.ensure_installed({
     "html",
-    -- "gopls",
     "pyright",
+    "sumneko_lua",
     "tsserver"
 })
 
@@ -30,6 +28,16 @@ lsp.on_attach(function(client, bufnr)
     bind("n", "<leader>f", function() vim.lsp.buf.formatting() end, opts)
 
 end)
+
+lsp.configure("sumneko_lua", {
+    settings = {
+        Lua = {
+            diagnostics = {
+                globals = { "vim" }
+            }
+        }
+    }
+})
 
 lsp.setup()
 
