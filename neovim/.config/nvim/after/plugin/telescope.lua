@@ -5,11 +5,15 @@ vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
---[[local telescope = require'telescope'
+local telescope = require("telescope")
 telescope.setup({
-    defaults = {
-        file_ignore_patterns = { "node_modules" }
-    },
-})--]]
-
+    pickers = {
+        find_files = {
+            find_command = {"rg", "--files", "--hidden", "--glob=!**/node_modules/*", "--glob=!**/__pycache__/*"}
+        },
+        live_grep = {
+            glob_pattern = {"!**/node_modules/*", "!**/__pycache__/*"}
+        }
+    }
+})
 
