@@ -9,7 +9,7 @@ local telescope = require("telescope")
 telescope.setup({
     pickers = {
         find_files = {
-            find_command = {"rg", "--files", "--hidden", "--glob=!**/node_modules/*", "--glob=!**/__pycache__/*"}
+            find_command = {"rg", "--files", "--hidden", "--glob=!**/.git/*", "--glob=!**/node_modules/*", "--glob=!**/__pycache__/*"}
         },
         live_grep = {
             glob_pattern = {"!**/node_modules/*", "!**/__pycache__/*"}
