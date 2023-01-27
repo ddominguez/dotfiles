@@ -1,16 +1,17 @@
 local null_ls = require("null-ls")
 
-local function isempty(s)
-  return s == nil or s == ""
+local function exepath_exists(s)
+    local exepath = vim.fn.exepath(s)
+    return exepath ~= nil and exepath ~= ""
 end
 
 local sources = {}
 
-if not isempty(vim.fn.exepath("black")) then
+if exepath_exists("black") then
     table.insert(sources, null_ls.builtins.formatting.black)
 end
 
-if not isempty(vim.fn.exepath("flake8")) then
+if exepath_exists("flake8") then
     table.insert(sources, null_ls.builtins.diagnostics.flake8)
 end
 
