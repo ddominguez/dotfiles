@@ -40,7 +40,16 @@ lsp.configure("sumneko_lua", {
 })
 
 lsp.configure("html", {
-    filetypes = { "html", "htmldjango" }
+    filetypes = { "html", "htmldjango" },
+    settings = {
+        html = {
+            format = {
+                templating = true,
+                wrapLineLength = 0,
+                wrapAttributes = "preserve-aligned",
+            }
+        }
+    }
 })
 
 lsp.setup()
