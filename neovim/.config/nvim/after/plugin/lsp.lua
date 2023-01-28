@@ -39,4 +39,8 @@ lsp.configure("sumneko_lua", {
     }
 })
 
+lsp.configure("html", {
+    filetypes = { "html", "htmldjango" }
+})
+
 lsp.setup()
