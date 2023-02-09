@@ -26,7 +26,6 @@ lsp.on_attach(function(_, bufnr)
     bind("n", "<leader>rn", function() vim.lsp.buf.rename() end, opts)
     bind("n", "<leader>ca", function() vim.lsp.buf.code_action() end, opts)
     bind("n", "<leader>f", function() vim.lsp.buf.format { async = true } end, opts)
-
 end)
 
 lsp.configure("sumneko_lua", {
@@ -51,5 +50,16 @@ lsp.configure("html", {
         }
     }
 })
+
+--  Language servers that already exist and not installed via plugins
+local installed_servers = {}
+
+if vim.fn.exepath("gopls") ~= "" then
+    table.insert(installed_servers, "gopls")
+end
+
+if next(installed_servers) ~= nil then
+    lsp.setup_servers(installed_servers)
+end
 
 lsp.setup()
