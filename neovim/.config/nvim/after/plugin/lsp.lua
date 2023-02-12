@@ -28,16 +28,6 @@ lsp.on_attach(function(_, bufnr)
     bind("n", "<leader>f", function() vim.lsp.buf.format { async = true } end, opts)
 end)
 
-lsp.configure("sumneko_lua", {
-    settings = {
-        Lua = {
-            diagnostics = {
-                globals = { "vim" }
-            }
-        }
-    }
-})
-
 lsp.configure("html", {
     filetypes = { "html", "htmldjango" },
     settings = {
@@ -51,11 +41,29 @@ lsp.configure("html", {
     }
 })
 
+lsp.configure("sumneko_lua", {
+    settings = {
+        Lua = {
+            diagnostics = {
+                globals = { "vim" }
+            }
+        }
+    }
+})
+
+lsp.configure("tsserver", {
+    single_file_support = false
+})
+
 --  Language servers that already exist and not installed via plugins
 local installed_servers = {}
 
 if vim.fn.exepath("gopls") ~= "" then
     table.insert(installed_servers, "gopls")
+end
+
+if vim.fn.exepath("deno") ~= "" then
+    table.insert(installed_servers, "denols")
 end
 
 if next(installed_servers) ~= nil then
