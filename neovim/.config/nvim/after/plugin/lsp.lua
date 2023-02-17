@@ -5,7 +5,7 @@ lsp.preset("recommended")
 lsp.ensure_installed({
     "html",
     "pyright",
-    "sumneko_lua",
+    "lua_ls",
     "tsserver"
 })
 
@@ -41,7 +41,7 @@ lsp.configure("html", {
     }
 })
 
-lsp.configure("sumneko_lua", {
+lsp.configure("lua_ls", {
     settings = {
         Lua = {
             diagnostics = {
