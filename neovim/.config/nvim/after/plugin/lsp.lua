@@ -67,6 +67,7 @@ if vim.fn.exepath("deno") ~= "" then
 end
 
 if next(installed_servers) ~= nil then
+    installed_servers.force = true
     lsp.setup_servers(installed_servers)
 end
 
