@@ -1,4 +1,5 @@
 local lsp = require("lsp-zero")
+local util = require("lspconfig.util")
 
 lsp.preset("recommended")
 
@@ -10,6 +11,13 @@ lsp.ensure_installed({
 })
 
 lsp.on_attach(function(_, bufnr)
+    -- if util.root_pattern("package.json")(vim.fn.getcwd()) then
+    --     if client.name == "denols" then
+    --         client.stop()
+    --         return
+    --     end
+    -- end
+
     local opts = { buffer = bufnr, remap = false }
     local bind = vim.keymap.set
 
@@ -52,6 +60,12 @@ lsp.configure("lua_ls", {
 })
 
 lsp.configure("tsserver", {
+    root_dir = util.root_pattern("package.json"),
+    single_file_support = false
+})
+
+lsp.configure("denols", {
+    root_dir = util.root_pattern("deno.json"),
     single_file_support = false
 })
 
@@ -62,9 +76,9 @@ if vim.fn.exepath("gopls") ~= "" then
     table.insert(installed_servers, "gopls")
 end
 
-if vim.fn.exepath("deno") ~= "" then
-    table.insert(installed_servers, "denols")
-end
+-- if vim.fn.exepath("deno") ~= "" then
+--     table.insert(installed_servers, "denols")
+-- end
 
 if next(installed_servers) ~= nil then
     installed_servers.force = true
