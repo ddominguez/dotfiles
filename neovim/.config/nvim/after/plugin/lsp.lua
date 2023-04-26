@@ -10,14 +10,19 @@ lsp.ensure_installed({
     "tsserver"
 })
 
-lsp.on_attach(function(_, bufnr)
-    -- if util.root_pattern("package.json")(vim.fn.getcwd()) then
+lsp.on_attach(function(client, bufnr)
+    if util.root_pattern("deno.json", "deno.jsonc")(vim.fn.getcwd()) then
+        if client.name == "tsserver" then
+            client.stop()
+            return
+        end
+    end
+    -- if util.root_pattern("package.json", "tsconfig.json")(vim.fn.getcwd()) then
     --     if client.name == "denols" then
     --         client.stop()
     --         return
     --     end
     -- end
-
     local opts = { buffer = bufnr, remap = false }
     local bind = vim.keymap.set
 
@@ -60,13 +65,12 @@ lsp.configure("lua_ls", {
 })
 
 lsp.configure("tsserver", {
-    root_dir = util.root_pattern("package.json"),
+    root_dir = util.root_pattern("package.json", "tsconfig.json"),
     single_file_support = false
 })
 
 lsp.configure("denols", {
-    root_dir = util.root_pattern("deno.json"),
-    single_file_support = false
+    root_dir = util.root_pattern("deno.json", "deno.jsonc"),
 })
 
 --  Language servers that already exist and not installed via plugins
@@ -76,9 +80,12 @@ if vim.fn.exepath("gopls") ~= "" then
     table.insert(installed_servers, "gopls")
 end
 
--- if vim.fn.exepath("deno") ~= "" then
---     table.insert(installed_servers, "denols")
--- end
+if vim.fn.exepath("deno") ~= "" and util.root_pattern("deno.json", "deno.jsonc")(vim.fn.getcwd()) then
+    vim.g.markdown_fenced_languages = {
+        "ts=typescript"
+    }
+    table.insert(installed_servers, "denols")
+end
 
 if next(installed_servers) ~= nil then
     installed_servers.force = true
