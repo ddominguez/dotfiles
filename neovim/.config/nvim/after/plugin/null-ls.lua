@@ -7,14 +7,13 @@ end
 
 local sources = {}
 
-if exepath_exists("black") then
-    table.insert(sources, null_ls.builtins.formatting.black)
-end
+-- install black via Mason
+table.insert(sources, null_ls.builtins.formatting.black)
 
 if exepath_exists("flake8") then
     table.insert(sources, null_ls.builtins.diagnostics.flake8)
 end
 
 null_ls.setup({
-    sources=sources
+    sources = sources
 })
