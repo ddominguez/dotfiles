@@ -17,12 +17,6 @@ lsp.on_attach(function(client, bufnr)
             return
         end
     end
-    -- if util.root_pattern("package.json", "tsconfig.json")(vim.fn.getcwd()) then
-    --     if client.name == "denols" then
-    --         client.stop()
-    --         return
-    --     end
-    -- end
     local opts = { buffer = bufnr, remap = false }
     local bind = vim.keymap.set
 
@@ -81,9 +75,6 @@ if vim.fn.exepath("gopls") ~= "" then
 end
 
 if vim.fn.exepath("deno") ~= "" and util.root_pattern("deno.json", "deno.jsonc")(vim.fn.getcwd()) then
-    vim.g.markdown_fenced_languages = {
-        "ts=typescript"
-    }
     table.insert(installed_servers, "denols")
 end
 
