@@ -24,5 +24,14 @@ set.mouse = ""
 vim.g.mapleader = " "
 
 
+-- configure 2 space indentation
+vim.api.nvim_create_augroup('setIndent', { clear = true })
+vim.api.nvim_create_autocmd('Filetype', {
+    group = 'setIndent',
+    pattern = { 'css', 'javascript', 'typescript', 'json', 'jsonc' },
+    command = 'setlocal shiftwidth=2 tabstop=2 softtabstop=2'
+})
+
+
 require "dave.plugins"
 require "dave.theme"
