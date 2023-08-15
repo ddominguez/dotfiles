@@ -24,7 +24,7 @@ set.mouse = ""
 vim.g.mapleader = " "
 
 -- hide the status line
-set.laststatus = 0
+set.laststatus = 1
 
 -- configure 2 space indentation
 vim.api.nvim_create_augroup('setIndent', { clear = true })
