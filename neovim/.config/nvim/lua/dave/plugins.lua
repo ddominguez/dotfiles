@@ -33,7 +33,6 @@ return require("packer").startup(function(use)
         run = ":TSUpdate"
     }
     use("lewis6991/gitsigns.nvim")
-    use("jose-elias-alvarez/null-ls.nvim")
     use {
         "numToStr/Comment.nvim",
         config = function()
