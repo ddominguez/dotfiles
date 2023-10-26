@@ -9,9 +9,8 @@ set autoindent
 set expandtab
 set tabstop=4
 set softtabstop=4
+set shiftwidth=4
 set noignorecase
-set expandtab
-set shiftwidth=2
 set smartindent
 set nohlsearch
 set incsearch
@@ -27,6 +26,7 @@ set nobackup
 set noswapfile
 set nowritebackup
 set ttyfast
+set termguicolors
 
 set background=dark
 colorscheme retrobox
