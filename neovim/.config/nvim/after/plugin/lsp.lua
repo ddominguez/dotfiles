@@ -1,5 +1,20 @@
 local lsp = require("lsp-zero")
 local util = require("lspconfig.util")
+local has_mason, mason_settings = pcall(require, "mason.settings")
+
+-- format_python will execute a python formatter installed from
+-- a local virtual environment, mason, or plugin manager
+local format_python = function()
+    if has_mason then
+        local mason_install_dir = mason_settings.current.install_root_dir
+        local mason_black = mason_install_dir .. "/bin/black"
+        if vim.fn.exepath(mason_black) ~= "" then
+            vim.cmd("! " .. mason_black .. " %")
+            return
+        end
+    end
+    vim.notify("Formatter not found", vim.log.levels.WARN)
+end
 
 lsp.preset("recommended")
 
@@ -23,8 +38,6 @@ lsp.on_attach(function(client, bufnr)
     bind("n", "<leader>e", function() vim.diagnostic.open_float() end, opts)
     bind("n", "[d", function() vim.diagnostic.goto_prev() end, opts)
     bind("n", "]d", function() vim.diagnostic.goto_next() end, opts)
-    bind("n", "<leader>q", function() vim.diagnostic.setloclist() end, opts)
-
     bind("n", "gD", function() vim.lsp.buf.declaration() end, opts)
     bind("n", "gd", function() vim.lsp.buf.definition() end, opts)
     bind("n", "K", function() vim.lsp.buf.hover() end, opts)
@@ -32,7 +45,14 @@ lsp.on_attach(function(client, bufnr)
     bind("n", "<leader>D", function() vim.lsp.buf.type_definition() end, opts)
     bind("n", "<leader>rn", function() vim.lsp.buf.rename() end, opts)
     bind("n", "<leader>ca", function() vim.lsp.buf.code_action() end, opts)
-    bind("n", "<leader>f", function() vim.lsp.buf.format { async = true } end, opts)
+    bind("n", "<leader>f", function()
+        local ft = vim.bo.filetype
+        if ft == "python" then
+            format_python()
+        else
+            vim.lsp.buf.format { async = true }
+        end
+    end, opts)
 end)
 
 lsp.configure("html", {
@@ -67,7 +87,8 @@ lsp.configure("denols", {
     root_dir = util.root_pattern("deno.json", "deno.jsonc"),
 })
 
---  Language servers that already exist and not installed via plugins
+--  Language servers that exist locally
+--  and not installed via mason or nvim plugin manager
 local installed_servers = {}
 
 if vim.fn.exepath("gopls") ~= "" then
