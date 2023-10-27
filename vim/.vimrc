@@ -12,7 +12,7 @@ set softtabstop=4
 set shiftwidth=4
 set noignorecase
 set smartindent
-set nohlsearch
+set hlsearch
 set incsearch
 set nonumber
 set nowrap
@@ -42,5 +42,6 @@ endif
 
 call plug#begin()
 Plug 'fatih/vim-go'
+Plug 'dense-analysis/ale'
 call plug#end()
 
