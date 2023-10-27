@@ -1,17 +1,10 @@
 local lsp = require("lsp-zero")
 local util = require("lspconfig.util")
-local has_mason, mason_settings = pcall(require, "mason.settings")
 
--- format_python will execute a python formatter installed from
--- a local virtual environment, mason, or plugin manager
+-- format_python will execute a python formatter that exists in vim.env.PATH
 local format_python = function()
-    if has_mason then
-        local mason_install_dir = mason_settings.current.install_root_dir
-        local mason_black = mason_install_dir .. "/bin/black"
-        if vim.fn.exepath(mason_black) ~= "" then
-            vim.cmd("! " .. mason_black .. " %")
-            return
-        end
+    if vim.fn.exepath("black") ~= "" then
+        vim.cmd("! black %")
     end
     vim.notify("Formatter not found", vim.log.levels.WARN)
 end
