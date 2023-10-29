@@ -5,6 +5,7 @@ local util = require("lspconfig.util")
 local format_python = function()
     if vim.fn.exepath("black") ~= "" then
         vim.cmd("! black %")
+        return
     end
     vim.notify("Formatter not found", vim.log.levels.WARN)
 end
