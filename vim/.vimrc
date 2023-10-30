@@ -4,14 +4,13 @@ filetype plugin indent on
 
 set encoding=utf-8
 set nocompatible
-set showmatch
 set autoindent
+set smartindent
 set expandtab
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set noignorecase
-set smartindent
 set hlsearch
 set incsearch
 set nonumber
