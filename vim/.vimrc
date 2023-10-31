@@ -2,6 +2,7 @@ syntax enable
 
 filetype plugin indent on
 
+let mapleader = " "
 set encoding=utf-8
 set nocompatible
 set autoindent
@@ -43,4 +44,3 @@ call plug#begin()
 Plug 'fatih/vim-go'
 Plug 'dense-analysis/ale'
 call plug#end()
-
