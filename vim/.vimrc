@@ -33,7 +33,7 @@ colorscheme retrobox
 
 hi clear SignColumn
 
-" nable omni-completion
+" enable omni-completion
 set omnifunc=syntaxcomplete#Complete
 
 " Plugins
@@ -63,4 +63,4 @@ au FileType go nmap <buffer> gd <Plug>(ale_go_to_definition)<CR>
 au FileType go,python nmap <buffer> <leader>f <Plug>(ale_fix)<CR>
 au FileType python nmap <buffer> <leader>x :! clear;python %<CR>
 au FileType go nmap <buffer> <leader>x :! clear;go run %<CR>
-au FileTYPE html setlocal shiftwidth=2 tabstop=2 softtabstop=2
+au FileType html setlocal shiftwidth=2 tabstop=2 softtabstop=2
