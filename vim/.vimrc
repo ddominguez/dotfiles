@@ -34,7 +34,7 @@ colorscheme retrobox
 hi clear SignColumn
 
 " enable omni-completion
-set omnifunc=syntaxcomplete#Complete
+" set omnifunc=syntaxcomplete#Complete
 
 let s:vpm = "$HOME/.vpm/bin"
 if (isdirectory(expand(s:vpm)))
@@ -53,12 +53,17 @@ Plug 'tpope/vim-commentary'
 Plug 'dense-analysis/ale'
 call plug#end()
 
+" autocomplete
+set completeopt=menuone
+set shortmess+=c
+let g:ale_completion_enabled = 1
+
 let g:ale_fix_on_save = 0
-let g:ale_completion_enabled = 0
 let g:ale_python_auto_virtualenv = 1
 let g:ale_linters = {
 \   'go': ['gopls'],
 \   'python': ['flake8', 'mypy'],
+\   'rust': ['analyzer'],
 \   'typescript': ['eslint', 'tsserver'],
 \   'typescriptreact': ['eslint', 'tsserver'],
 \}
@@ -66,6 +71,7 @@ let g:ale_fixers = {
 \   'css': ['prettier'],
 \   'go': ['gofmt'],
 \   'python': ['black'],
+\   'rust': ['rustfmt'],
 \   'typescript': ['prettier'],
 \   'typescriptreact': ['prettier'],
 \}
@@ -74,12 +80,14 @@ if executable(expand("$VIRTUAL_ENV/bin/python"))
     let g:ale_python_mypy_options = '--python-executable '.$VIRTUAL_ENV.'/bin/python'
 endif
 
-au FileType go,typescript,typescriptreact
+au FileType go,rust,typescript,typescriptreact
             \ nmap <buffer> gd <Plug>(ale_go_to_definition)<CR>
-au FileType css,go,python,javascript,typescript,typescriptreact
+au FileType css,go,python,javascript,rust,typescript,typescriptreact
             \ nmap <buffer> <leader>f <Plug>(ale_fix)<CR>
 
 au FileType python nmap <buffer> <leader>x :! clear;python %<CR>
 au FileType go nmap <buffer> <leader>x :! clear;go run %<CR>
-au FileType css,html,javascript,typescript,typescriptreact
+
+" filetypes with 2 space tabs
+au FileType css,html,javascript,json,typescript,typescriptreact
             \ setlocal shiftwidth=2 tabstop=2 softtabstop=2
