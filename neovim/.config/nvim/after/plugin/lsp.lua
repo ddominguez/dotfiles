@@ -93,6 +93,10 @@ if vim.fn.exepath("deno") ~= "" and util.root_pattern("deno.json", "deno.jsonc")
     table.insert(installed_servers, "denols")
 end
 
+if vim.fn.exepath("rust-analyzer") ~= "" then
+    table.insert(installed_servers, "rust_analyzer")
+end
+
 if next(installed_servers) ~= nil then
     installed_servers.force = true
     lsp.setup_servers(installed_servers)
