@@ -51,6 +51,8 @@ endif
 call plug#begin()
 Plug 'tpope/vim-commentary'
 Plug 'dense-analysis/ale'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
 call plug#end()
 
 " autocomplete
