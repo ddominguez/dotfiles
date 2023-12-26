@@ -14,13 +14,13 @@ set.cmdheight = 1
 set.colorcolumn = "80"
 set.signcolumn = "yes"
 set.termguicolors = true
-
 set.mouse = ""
-
+set.laststatus = 1
 vim.g.mapleader = " "
 
--- hide the status line
-set.laststatus = 1
+set.background = "dark"
+vim.cmd([[colorscheme habamax]])
+vim.api.nvim_set_hl(0, "SignColumn", { bg = "none" })
 
 -- configure 2 space indentation
 vim.api.nvim_create_augroup('setIndent', { clear = true })
@@ -33,6 +33,10 @@ vim.api.nvim_create_autocmd('Filetype', {
     command = 'setlocal shiftwidth=2 tabstop=2 softtabstop=2'
 })
 
+-- vim packages
+-- Find out if this could replace Mason
+if vim.fn.isdirectory(vim.fn.expand("$HOME/.vpm/bin")) ~= 0 then
+    vim.env.PATH = vim.env.PATH .. ":" .. vim.fn.expand("$HOME/.vpm/bin")
+end
 
 require "dave.plugins"
-require "dave.theme"
