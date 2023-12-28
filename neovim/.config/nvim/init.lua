@@ -18,6 +18,9 @@ set.mouse = ""
 set.laststatus = 1
 vim.g.mapleader = " "
 
+set.completeopt="menuone"
+vim.cmd([[set shortmess+=c]])
+
 set.background = "dark"
 vim.cmd([[colorscheme habamax]])
 vim.api.nvim_set_hl(0, "SignColumn", { bg = "none" })
@@ -42,4 +45,26 @@ if vim.fn.isdirectory(vim.fn.expand("$HOME/.vpm/bin")) ~= 0 then
     vim.env.PATH = vim.env.PATH .. ":" .. vim.fn.expand("$HOME/.vpm/bin")
 end
 
-require "dave.plugins"
+require("packer").startup(function(use)
+    use("wbthomason/packer.nvim")
+    use("neovim/nvim-lspconfig")
+    use("hrsh7th/nvim-cmp")
+    use("hrsh7th/cmp-nvim-lsp")
+    use('saadparwaiz1/cmp_luasnip')
+    use('L3MON4D3/LuaSnip')
+    use {
+        "nvim-treesitter/nvim-treesitter",
+        run = ":TSUpdate"
+    }
+    use {
+        "numToStr/Comment.nvim",
+        config = function()
+            require("Comment").setup()
+        end
+    }
+    use("lewis6991/gitsigns.nvim")
+    use("junegunn/fzf")
+    use("junegunn/fzf.vim")
+end)
+
+require "plugins_setup"
