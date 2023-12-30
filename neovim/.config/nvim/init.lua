@@ -65,6 +65,7 @@ require("packer").startup(function(use)
     use("lewis6991/gitsigns.nvim")
     use("junegunn/fzf")
     use("junegunn/fzf.vim")
+    use("stevearc/conform.nvim")
 end)
 
 require "plugins_setup"

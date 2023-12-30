@@ -35,7 +35,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
         vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
         vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
-        vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, opts)
+        -- replaced by conform
+        -- vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, opts)
     end,
 })
 
@@ -58,3 +59,22 @@ cmp.setup {
         { name = 'nvim_lsp' },
     },
 }
+
+-- conform setup
+local conform = require("conform")
+conform.setup({
+    formatters_by_ft = {
+        javascript = { "prettier" },
+        typescript = { "prettier" },
+        javascriptreact = { "prettier" },
+        typescriptreact = { "prettier" },
+        python = { "black" }
+    }
+})
+vim.keymap.set('n', '<leader>f', function()
+    conform.format({
+        lsp_fallback = true,
+        async = false,
+        timeout_ms = 500,
+    })
+end)
