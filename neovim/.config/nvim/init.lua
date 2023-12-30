@@ -53,10 +53,6 @@ require("packer").startup(function(use)
     use('saadparwaiz1/cmp_luasnip')
     use('L3MON4D3/LuaSnip')
     use {
-        "nvim-treesitter/nvim-treesitter",
-        run = ":TSUpdate"
-    }
-    use {
         "numToStr/Comment.nvim",
         config = function()
             require("Comment").setup()
