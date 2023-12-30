@@ -4,11 +4,25 @@ require("gitsigns").setup()
 -- lsp and autocomplete setup
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 local lspconfig = require('lspconfig')
-local servers = { "gopls", "lua_ls", "pyright", "rust_analyzer", "tsserver" }
-for _, lsp in ipairs(servers) do
-    lspconfig[lsp].setup {
-        capabilities = capabilities,
-    }
+local servers = {
+    gopls = {},
+    lua_ls = {
+        settings = {
+            Lua = {
+                diagnostics = {
+                    globals = { "vim" }
+                }
+            }
+        }
+    },
+    pyright = {},
+    rust_analyzer = {},
+    tsserver = {}
+}
+local default_config = { capabilities = capabilities }
+for server, config in pairs(servers) do
+    config = vim.tbl_deep_extend("force", default_config, config)
+    lspconfig[server].setup(config)
 end
 
 -- Global mappings.
