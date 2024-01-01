@@ -59,8 +59,8 @@ let g:ale_completion_enabled = 1
 
 let g:ale_fix_on_save = 0
 let g:ale_python_auto_virtualenv = 1
-let g:ale_hover_to_floating_preview = 1
-let g:ale_floating_window_border = []
+" let g:ale_hover_to_floating_preview = 1
+" let g:ale_floating_window_border = []
 
 " Adding pyright as a python linter enables pyright-langserver
 let g:ale_linters = {
@@ -84,7 +84,7 @@ if executable(expand("$VIRTUAL_ENV/bin/python"))
 endif
 
 au FileType go,python,rust,typescript,typescriptreact
-            \ nmap <buffer> K :ALEHover<CR>
+            \ nmap <buffer> <silent> K :ALEHover<CR>
 
 au FileType go,python,rust,typescript,typescriptreact
             \ nmap <buffer> gd <Plug>(ale_go_to_definition)<CR>
