@@ -18,7 +18,7 @@ set.mouse = ""
 set.laststatus = 1
 vim.g.mapleader = " "
 
-set.completeopt="menuone"
+set.completeopt = "menuone"
 vim.cmd([[set shortmess+=c]])
 
 set.background = "dark"
@@ -50,8 +50,8 @@ require("packer").startup(function(use)
     use("neovim/nvim-lspconfig")
     use("hrsh7th/nvim-cmp")
     use("hrsh7th/cmp-nvim-lsp")
-    use('saadparwaiz1/cmp_luasnip')
-    use('L3MON4D3/LuaSnip')
+    use("L3MON4D3/LuaSnip")
+    use("saadparwaiz1/cmp_luasnip")
     use {
         "numToStr/Comment.nvim",
         config = function()
@@ -62,6 +62,17 @@ require("packer").startup(function(use)
     use("junegunn/fzf")
     use("junegunn/fzf.vim")
     use("stevearc/conform.nvim")
+    use {
+        "nvim-treesitter/nvim-treesitter",
+        run = ":TSUpdate"
+    }
 end)
+
+-- go templ ft
+vim.filetype.add({
+    extension = {
+        templ = "templ",
+    },
+})
 
 require "plugins_setup"
