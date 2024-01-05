@@ -29,7 +29,7 @@ set ttyfast
 set termguicolors
 
 set background=dark
-colorscheme retrobox
+colorscheme habamax
 
 hi clear SignColumn
 
