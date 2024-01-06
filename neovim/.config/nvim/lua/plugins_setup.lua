@@ -17,7 +17,8 @@ local servers = {
     },
     pyright = {},
     rust_analyzer = {},
-    tsserver = {}
+    templ = {},
+    tsserver = {},
 }
 local default_config = { capabilities = capabilities }
 for server, config in pairs(servers) do
