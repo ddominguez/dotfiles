@@ -30,7 +30,6 @@ set termguicolors
 
 set background=dark
 colorscheme habamax
-
 hi clear SignColumn
 
 let s:vpm = "$HOME/.vpm/bin"
@@ -59,8 +58,6 @@ let g:ale_completion_enabled = 1
 
 let g:ale_fix_on_save = 0
 let g:ale_python_auto_virtualenv = 1
-" let g:ale_hover_to_floating_preview = 1
-" let g:ale_floating_window_border = []
 
 " Adding pyright as a python linter enables pyright-langserver
 let g:ale_linters = {
@@ -93,6 +90,8 @@ au FileType css,go,python,javascript,rust,typescript,typescriptreact
 
 au FileType python nmap <buffer> <leader>x :! clear;python %<CR>
 au FileType go nmap <buffer> <leader>x :! clear;go run %<CR>
+
+au FileType help nmap <buffer> q :q<CR>
 
 " filetypes with 2 space tabs
 au FileType css,html,javascript,json,typescript,typescriptreact
