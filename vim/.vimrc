@@ -82,15 +82,17 @@ endif
 
 au FileType go,python,rust,typescript,typescriptreact
             \ nmap <buffer> <silent> K :ALEHover<CR>
-
 au FileType go,python,rust,typescript,typescriptreact
             \ nmap <buffer> gd <Plug>(ale_go_to_definition)<CR>
 au FileType css,go,python,javascript,rust,typescript,typescriptreact
             \ nmap <buffer> <leader>f <Plug>(ale_fix)<CR>
 
+" fzf commands
+nmap <leader>ff :Files<CR>
+nmap <leader>fb :Buffers<CR>
+
 au FileType python nmap <buffer> <leader>x :! clear;python %<CR>
 au FileType go nmap <buffer> <leader>x :! clear;go run %<CR>
-
 au FileType help nmap <buffer> q :q<CR>
 
 " filetypes with 2 space tabs
