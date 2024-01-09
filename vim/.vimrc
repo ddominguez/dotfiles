@@ -21,6 +21,7 @@ set colorcolumn=80
 set showcmd
 set showmode
 set wildmenu
+set wildoptions=pum
 set signcolumn=yes
 set nobackup
 set noswapfile
@@ -32,9 +33,9 @@ set background=dark
 colorscheme habamax
 hi clear SignColumn
 
-let s:vpm = "$HOME/.vpm/bin"
-if (isdirectory(expand(s:vpm)))
-    let $PATH .= ':' . expand(s:vpm)
+let vpm_bin = "$HOME/.vpm/bin"
+if (isdirectory(expand(vpm_bin)))
+    let $PATH .= ':' . expand(vpm_bin)
 endif
 
 " Plugins
