@@ -75,4 +75,11 @@ vim.filetype.add({
     },
 })
 
+-- keymaps
+vim.cmd([[au FileType help nmap <buffer> q :q<CR>]])
+
+-- fzf mappings
+vim.keymap.set('n', '<leader>ff', ":Files<cr>")
+vim.keymap.set('n', '<leader>fb', ":Buffers<cr>")
+
 require "plugins_setup"
