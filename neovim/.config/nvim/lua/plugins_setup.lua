@@ -13,7 +13,7 @@ local lsp_settings = {
         }
     },
 }
-local lsps = { 'gopls', 'lua_ls', 'pyright', 'rust_analyzer', 'templ', 'tsserver' }
+local lsps = { 'cssls', 'gopls', 'html', 'lua_ls', 'pyright', 'rust_analyzer', 'templ', 'tsserver' }
 local lsp_config = { capabilities = capabilities }
 for _, lsp in ipairs(lsps) do
     if lsp_settings[lsp] then lsp_config.settings = lsp_settings[lsp] end
