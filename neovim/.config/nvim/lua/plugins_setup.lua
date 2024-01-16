@@ -86,10 +86,10 @@ cmp.setup {
 local conform = require("conform")
 conform.setup({
     formatters_by_ft = {
-        javascript = { "prettier" },
-        typescript = { "prettier" },
-        javascriptreact = { "prettier" },
-        typescriptreact = { "prettier" },
+        javascript = { { "biome", "prettier" } },
+        typescript = { { "biome", "prettier" } },
+        javascriptreact = { { "biome", "prettier" } },
+        typescriptreact = { { "biome", "prettier" } },
         python = { "black" }
     }
 })
@@ -97,7 +97,7 @@ vim.keymap.set('n', '<leader>f', function()
     conform.format({
         lsp_fallback = true,
         async = false,
-        timeout_ms = 500,
+        timeout_ms = 1000,
     })
 end)
 
