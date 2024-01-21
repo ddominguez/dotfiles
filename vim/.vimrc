@@ -81,7 +81,7 @@ if executable(expand("$VIRTUAL_ENV/bin/python"))
     let g:ale_python_mypy_options = '--python-executable '.$VIRTUAL_ENV.'/bin/python'
 endif
 
-au FileType go,python,rust,typescript,typescriptreact
+au FileType css,html,htmldjango,go,python,rust,typescript,typescriptreact
             \ nmap <buffer> <silent> K :ALEHover<CR>
 au FileType go,python,rust,typescript,typescriptreact
             \ nmap <buffer> gd <Plug>(ale_go_to_definition)<CR>
@@ -97,5 +97,5 @@ au FileType go nmap <buffer> <leader>x :! clear;go run %<CR>
 au FileType help nmap <buffer> q :q<CR>
 
 " filetypes with 2 space tabs
-au FileType css,html,javascript,json,typescript,typescriptreact
+au FileType css,html,htmldjango,javascript,json,typescript,typescriptreact
             \ setlocal shiftwidth=2 tabstop=2 softtabstop=2
