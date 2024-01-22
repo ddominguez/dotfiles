@@ -24,7 +24,7 @@ vim.cmd([[set shortmess+=c]])
 set.background = "dark"
 vim.cmd([[colorscheme habamax]])
 vim.api.nvim_set_hl(0, "SignColumn", { bg = "none" })
-vim.api.nvim_set_hl(0, "MatchParen", { bg = "#eeeeee", fg = "#5f8787", bold = false, reverse = true })
+vim.api.nvim_set_hl(0, "MatchParen", { bg = "#CCCCCC", fg = "#1C1C1C", bold = true, reverse = true })
 vim.api.nvim_set_hl(0, "FloatBorder", { bg = "#111111" })
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#111111" })
 
