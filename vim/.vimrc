@@ -60,7 +60,6 @@ let g:ale_completion_enabled = 1
 let g:ale_fix_on_save = 0
 let g:ale_python_auto_virtualenv = 1
 
-" Adding pyright as a python linter enables pyright-langserver
 let g:ale_linters = {
 \   'go': ['gopls'],
 \   'python': ['flake8', 'pyright'],
@@ -71,7 +70,7 @@ let g:ale_linters = {
 let g:ale_fixers = {
 \   'css': ['prettier'],
 \   'go': ['gofmt'],
-\   'python': ['black'],
+\   'python': ['ruff_format'],
 \   'rust': ['rustfmt'],
 \   'typescript': ['prettier'],
 \   'typescriptreact': ['prettier'],

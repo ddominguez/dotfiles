@@ -90,7 +90,7 @@ conform.setup({
         typescript = { { "biome", "prettier" } },
         javascriptreact = { { "biome", "prettier" } },
         typescriptreact = { { "biome", "prettier" } },
-        python = { "black" }
+        python = { { "ruff_format", "black" } }
     }
 })
 vim.keymap.set('n', '<leader>f', function()
