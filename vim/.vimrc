@@ -76,6 +76,15 @@ let g:ale_fixers = {
 \   'typescriptreact': ['prettier'],
 \}
 
+if filereadable('./biome.json')
+    let g:ale_fixers = {'typescript': ['biome'], 'typescriptreact': ['biome']}
+endif
+
+if filereadable('./deno.json')
+    let g:ale_linters = {'typescript': ['deno']}
+    let g:ale_fixers = {'typescript': ['deno']}
+endif
+
 if executable(expand("$VIRTUAL_ENV/bin/python"))
     let g:ale_python_mypy_options = '--python-executable '.$VIRTUAL_ENV.'/bin/python'
 endif
