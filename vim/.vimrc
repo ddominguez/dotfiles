@@ -32,6 +32,7 @@ set termguicolors
 set background=dark
 colorscheme habamax
 hi clear SignColumn
+hi Normal cterm=NONE ctermfg=250 ctermbg=black gui=NONE guifg=#bcbcbc guibg=#0a0a0a
 
 let vpm_bin = "$HOME/.vpm/bin"
 if (isdirectory(expand(vpm_bin)))
