@@ -64,6 +64,7 @@ let g:ale_python_auto_virtualenv = 1
 let g:ale_linters = {
 \   'go': ['gopls'],
 \   'python': ['flake8', 'pyright'],
+\   'ruby': ['ruby'],
 \   'rust': ['analyzer'],
 \   'typescript': ['eslint', 'tsserver'],
 \   'typescriptreact': ['eslint', 'tsserver'],
@@ -78,6 +79,7 @@ let g:ale_fixers = {
 \}
 
 if filereadable('./biome.json')
+    let g:ale_linters = {'typescript': ['biome'], 'typescriptreact': ['biome']}
     let g:ale_fixers = {'typescript': ['biome'], 'typescriptreact': ['biome']}
 endif
 
