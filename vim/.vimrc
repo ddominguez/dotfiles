@@ -29,11 +29,6 @@ set nowritebackup
 set ttyfast
 set termguicolors
 
-set background=dark
-colorscheme habamax
-hi clear SignColumn
-hi Normal cterm=NONE ctermfg=250 ctermbg=black gui=NONE guifg=#bcbcbc guibg=#0a0a0a
-
 let vpm_bin = "$HOME/.vpm/bin"
 if (isdirectory(expand(vpm_bin)))
     let $PATH .= ':' . expand(vpm_bin)
@@ -51,7 +46,12 @@ Plug 'tpope/vim-commentary'
 Plug 'dense-analysis/ale'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
+Plug 'lighthaus-theme/vim-lighthaus'
 call plug#end()
+
+set background=dark
+colorscheme lighthaus
+
 
 " autocomplete
 set completeopt=menuone
@@ -67,8 +67,8 @@ let g:ale_linters = {
 \   'python': ['flake8', 'pyright'],
 \   'ruby': ['ruby'],
 \   'rust': ['analyzer'],
-\   'typescript': ['eslint', 'tsserver'],
-\   'typescriptreact': ['eslint', 'tsserver'],
+\   'typescript': ['tsserver'],
+\   'typescriptreact': ['tsserver'],
 \}
 let g:ale_fixers = {
 \   'css': ['prettier'],
@@ -80,7 +80,9 @@ let g:ale_fixers = {
 \}
 
 if filereadable('./biome.json')
-    let g:ale_linters = {'typescript': ['biome'], 'typescriptreact': ['biome']}
+    " we still need tsserver for ale hover and detail
+    let g:ale_linters['typescript'] += ['biome']
+    let g:ale_linters['typescriptreact'] += ['biome']
     let g:ale_fixers = {'typescript': ['biome'], 'typescriptreact': ['biome']}
 endif
 
