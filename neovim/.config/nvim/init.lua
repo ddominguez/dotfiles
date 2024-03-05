@@ -22,11 +22,6 @@ set.completeopt = "menuone"
 vim.cmd([[set shortmess+=c]])
 
 set.background = "dark"
-vim.cmd([[colorscheme habamax]])
-vim.api.nvim_set_hl(0, "SignColumn", { bg = "none" })
-vim.api.nvim_set_hl(0, "MatchParen", { bg = "#CCCCCC", fg = "#1C1C1C", bold = true, reverse = true })
-vim.api.nvim_set_hl(0, "FloatBorder", { bg = "#111111" })
-vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#111111" })
 
 -- configure 2 space indentation
 vim.api.nvim_create_augroup('setIndent', { clear = true })
@@ -66,7 +61,10 @@ require("packer").startup(function(use)
         "nvim-treesitter/nvim-treesitter",
         run = ":TSUpdate"
     }
+    use("lighthaus-theme/vim-lighthaus")
 end)
+
+vim.cmd([[colorscheme lighthaus]])
 
 -- go templ ft
 vim.filetype.add({
