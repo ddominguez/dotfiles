@@ -79,14 +79,19 @@ let g:ale_fixers = {
 \   'typescriptreact': ['prettier'],
 \}
 
+if filereadable('./.eslintrc.js')
+    let g:ale_linters['typescript'] += ['eslint']
+    let g:ale_linters['typescriptreact'] += ['eslint']
+endif
+
 if filereadable('./biome.json')
-    " we still need tsserver for ale hover and detail
     let g:ale_linters['typescript'] += ['biome']
     let g:ale_linters['typescriptreact'] += ['biome']
     let g:ale_fixers = {'typescript': ['biome'], 'typescriptreact': ['biome']}
 endif
 
 if filereadable('./deno.json')
+    " deno has its own lsp, linter, and formatter
     let g:ale_linters = {'typescript': ['deno']}
     let g:ale_fixers = {'typescript': ['deno']}
 endif
