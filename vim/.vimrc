@@ -56,12 +56,12 @@ colorscheme lighthaus
 " autocomplete
 set completeopt=menuone
 set shortmess+=c
-let g:ale_completion_enabled = 1
 
+let g:ale_completion_enabled = 1
 let g:ale_fix_on_save = 0
 let g:ale_python_auto_virtualenv = 1
-
 let g:ale_linters_explicit = 1
+
 let g:ale_linters = {
 \   'go': ['gopls'],
 \   'python': ['flake8', 'pyright'],
@@ -79,18 +79,27 @@ let g:ale_fixers = {
 \   'typescriptreact': ['prettier'],
 \}
 
-if filereadable('./.eslintrc.js')
+function FindConfigFile(...)
+    for f in a:000
+        if filereadable(getcwd().'/'.f)
+            return 1
+        endif
+    endfor
+    return 0
+endfunction
+
+if FindConfigFile('.eslintrc.js', '.eslintrc.cjs')
     let g:ale_linters['typescript'] += ['eslint']
     let g:ale_linters['typescriptreact'] += ['eslint']
 endif
 
-if filereadable('./biome.json')
-    let g:ale_linters['typescript'] += ['biome']
-    let g:ale_linters['typescriptreact'] += ['biome']
+if FindConfigFile('biome.json')
+    " let g:ale_linters['typescript'] += ['biome']
+    " let g:ale_linters['typescriptreact'] += ['biome']
     let g:ale_fixers = {'typescript': ['biome'], 'typescriptreact': ['biome']}
 endif
 
-if filereadable('./deno.json')
+if FindConfigFile('deno.json')
     " deno has its own lsp, linter, and formatter
     let g:ale_linters = {'typescript': ['deno']}
     let g:ale_fixers = {'typescript': ['deno']}
@@ -100,6 +109,7 @@ if executable(expand("$VIRTUAL_ENV/bin/python"))
     let g:ale_python_mypy_options = '--python-executable '.$VIRTUAL_ENV.'/bin/python'
 endif
 
+au FileType ale-info,ale-preview.message setlocal wrap linebreak
 au FileType css,html,htmldjango,go,python,rust,typescript,typescriptreact
             \ nmap <buffer> <silent> K :ALEHover<CR>
 au FileType go,python,rust,typescript,typescriptreact
@@ -111,8 +121,8 @@ au FileType css,go,python,javascript,rust,typescript,typescriptreact
 nmap <leader>ff :Files<CR>
 nmap <leader>fb :Buffers<CR>
 
-au FileType python nmap <buffer> <leader>x :! clear;python %<CR>
-au FileType go nmap <buffer> <leader>x :! clear;go run %<CR>
+au FileType python nmap <buffer> <leader>x :!clear;python %<CR>
+au FileType go nmap <buffer> <leader>x :!clear;go run %<CR>
 au FileType help nmap <buffer> q :q<CR>
 
 " filetypes with 2 space tabs
