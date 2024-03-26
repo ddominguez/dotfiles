@@ -28,11 +28,12 @@ vim.api.nvim_create_augroup('setIndent', { clear = true })
 vim.api.nvim_create_autocmd('Filetype', {
     group = 'setIndent',
     pattern = {
-        'css', 'html', 'htmldjango', 'javascript', 'javascriptreact',
+        'css', 'gleam', 'html', 'htmldjango', 'javascript', 'javascriptreact',
         'typescript', 'typescriptreact', 'json', 'jsonc'
     },
     command = 'setlocal shiftwidth=2 tabstop=2 softtabstop=2'
 })
+vim.cmd([[au FileType qf setlocal wrap linebreak]])
 
 -- vim packages
 -- Find out if this could replace Mason
@@ -75,6 +76,7 @@ vim.filetype.add({
 
 -- keymaps
 vim.cmd([[au FileType help nmap <buffer> q :q<CR>]])
+vim.cmd([[au FileType gleam nmap <buffer> <leader>x :!gleam run<CR>]])
 
 -- fzf mappings
 vim.keymap.set('n', '<leader>ff', ":Files<cr>")

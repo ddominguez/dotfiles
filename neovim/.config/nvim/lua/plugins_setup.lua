@@ -13,7 +13,10 @@ local lsp_settings = {
         }
     },
 }
-local lsps = { 'cssls', 'gopls', 'html', 'lua_ls', 'pyright', 'rust_analyzer', 'templ', 'tsserver' }
+local lsps = {
+    'cssls', 'gopls', 'eslint', 'gleam', 'html', 'lua_ls', 'pyright',
+    'rust_analyzer', 'templ', 'tsserver'
+}
 local lsp_config = { capabilities = capabilities }
 for _, lsp in ipairs(lsps) do
     if lsp_settings[lsp] then lsp_config.settings = lsp_settings[lsp] end
@@ -25,7 +28,8 @@ end
 -- vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
 -- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 -- vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
--- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
+
+vim.diagnostic.config({ virtual_text = false })
 
 -- Use LspAttach autocommand to only map the following keys
 -- after the language server attaches to the current buffer
@@ -44,6 +48,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
         vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
         vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
+        vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
         -- replaced by conform
         -- vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, opts)
     end,
