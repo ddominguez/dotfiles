@@ -6,20 +6,32 @@ local capabilities = require("cmp_nvim_lsp").default_capabilities()
 local lspconfig = require('lspconfig')
 local lsp_settings = {
     lua_ls = {
-        Lua = {
-            diagnostics = {
-                globals = { "vim" }
+        settings = {
+            Lua = {
+                diagnostics = {
+                    globals = { "vim" }
+                }
             }
         }
     },
+    lexical = {
+        cmd = { vim.fn.expand("$HOME/.vpm/packages/lexical/_build/dev/package/lexical/bin/start_lexical.sh") }
+    }
 }
 local lsps = {
-    'cssls', 'gopls', 'eslint', 'gleam', 'html', 'lua_ls', 'pyright',
+    'cssls', 'gopls', 'eslint', 'gleam', 'html', 'lexical', 'lua_ls', 'pyright',
     'rust_analyzer', 'templ', 'tsserver'
 }
-local lsp_config = { capabilities = capabilities }
 for _, lsp in ipairs(lsps) do
-    if lsp_settings[lsp] then lsp_config.settings = lsp_settings[lsp] end
+    local lsp_config = { capabilities = capabilities }
+    if lsp_settings[lsp] then
+        if lsp_settings[lsp].settings then
+            lsp_config.settings = lsp_settings[lsp].settings
+        end
+        if lsp_settings[lsp].cmd then
+            lsp_config.cmd = lsp_settings[lsp].cmd
+        end
+    end
     lspconfig[lsp].setup(lsp_config)
 end
 
