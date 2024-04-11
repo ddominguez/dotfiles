@@ -4,7 +4,30 @@ require("gitsigns").setup()
 -- lsp and autocomplete setup
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 local lspconfig = require('lspconfig')
+local lsp_util = require('lspconfig.util')
+
+local is_deno_proj = function()
+    if lsp_util.root_pattern("deno.json", "deno.jsonc")(vim.fn.getcwd()) then
+        return true
+    end
+    return false
+end
+
 local lsp_settings = {
+    cssls = {},
+    denols = {
+        settings = {
+            deno = { enable = is_deno_proj() }
+        },
+        autostart = is_deno_proj()
+    },
+    gopls = {},
+    eslint = {},
+    gleam = {},
+    html = {},
+    lexical = {
+        cmd = { vim.fn.expand("$HOME/.vpm/packages/lexical/_build/dev/package/lexical/bin/start_lexical.sh") }
+    },
     lua_ls = {
         settings = {
             Lua = {
@@ -14,30 +37,22 @@ local lsp_settings = {
             }
         }
     },
-    lexical = {
-        cmd = { vim.fn.expand("$HOME/.vpm/packages/lexical/_build/dev/package/lexical/bin/start_lexical.sh") }
+    pyright = {},
+    rust_analyzer = {},
+    templ = {},
+    tsserver = {
+        autostart = is_deno_proj() == false,
+        single_file_support = is_deno_proj() == false,
     }
 }
-local lsps = {
-    'cssls', 'gopls', 'eslint', 'gleam', 'html', 'lexical', 'lua_ls', 'pyright',
-    'rust_analyzer', 'templ', 'tsserver'
-}
-for _, lsp in ipairs(lsps) do
-    local lsp_config = { capabilities = capabilities }
-    if lsp_settings[lsp] then
-        if lsp_settings[lsp].settings then
-            lsp_config.settings = lsp_settings[lsp].settings
-        end
-        if lsp_settings[lsp].cmd then
-            lsp_config.cmd = lsp_settings[lsp].cmd
-        end
-    end
-    lspconfig[lsp].setup(lsp_config)
+for k, v in pairs(lsp_settings) do
+    local c = v
+    c.capabilities = capabilities
+    lspconfig[k].setup(c)
 end
 
 -- Global mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
--- vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
 -- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 -- vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 
@@ -61,6 +76,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
         vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
         vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
+        vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
         -- replaced by conform
         -- vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, opts)
     end,
