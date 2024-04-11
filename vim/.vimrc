@@ -88,7 +88,7 @@ function FindConfigFile(...)
     return 0
 endfunction
 
-if FindConfigFile('.eslintrc.js', '.eslintrc.cjs')
+if FindConfigFile('.eslintrc.js', '.eslintrc.cjs', '.eslintrc.json')
     let g:ale_linters['typescript'] += ['eslint']
     let g:ale_linters['typescriptreact'] += ['eslint']
 endif
@@ -112,6 +112,8 @@ endif
 au FileType ale-info,ale-preview.message setlocal wrap linebreak
 au FileType css,html,htmldjango,go,python,rust,typescript,typescriptreact
             \ nmap <buffer> <silent> K :ALEHover<CR>
+au FileType css,html,htmldjango,go,python,rust,typescript,typescriptreact
+            \ nmap <buffer> <silent> <leader>q :ALEDetail<CR>
 au FileType go,python,rust,typescript,typescriptreact
             \ nmap <buffer> gd <Plug>(ale_go_to_definition)<CR>
 au FileType css,go,python,javascript,rust,typescript,typescriptreact
