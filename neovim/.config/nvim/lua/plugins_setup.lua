@@ -12,14 +12,15 @@ local is_deno_proj = function()
     end
     return false
 end
+local is_deno = is_deno_proj()
 
 local lsp_settings = {
     cssls = {},
     denols = {
         settings = {
-            deno = { enable = is_deno_proj() }
+            deno = { enable = is_deno }
         },
-        autostart = is_deno_proj()
+        autostart = is_deno
     },
     gopls = {},
     eslint = {},
@@ -41,8 +42,8 @@ local lsp_settings = {
     rust_analyzer = {},
     templ = {},
     tsserver = {
-        autostart = is_deno_proj() == false,
-        single_file_support = is_deno_proj() == false,
+        autostart = is_deno == false,
+        single_file_support = is_deno == false,
     }
 }
 for k, v in pairs(lsp_settings) do
