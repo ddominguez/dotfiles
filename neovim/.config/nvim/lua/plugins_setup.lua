@@ -76,8 +76,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
         vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
         vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
-        vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
-        vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
+        vim.keymap.set('n', '<leader>gr', vim.lsp.buf.references, opts)
+        vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, opts)
+        vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, opts)
         -- replaced by conform
         -- vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, opts)
     end,
