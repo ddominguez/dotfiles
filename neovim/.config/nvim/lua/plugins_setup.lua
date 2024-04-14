@@ -57,6 +57,8 @@ end
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
 
+vim.diagnostic.config({ virtual_text = false })
+
 -- Use LspAttach autocommand to only map the following keys
 -- after the language server attaches to the current buffer
 vim.api.nvim_create_autocmd('LspAttach', {
