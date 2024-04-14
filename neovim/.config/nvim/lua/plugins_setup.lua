@@ -46,18 +46,16 @@ local lsp_settings = {
         single_file_support = is_deno == false,
     }
 }
-for k, v in pairs(lsp_settings) do
-    local c = v
-    c.capabilities = capabilities
-    lspconfig[k].setup(c)
+for name, config in pairs(lsp_settings) do
+    lspconfig[name].setup(vim.tbl_deep_extend("force", config, { capabilities = capabilities }))
 end
 
 -- Global mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 -- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 -- vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
-
-vim.diagnostic.config({ virtual_text = false })
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
 
 -- Use LspAttach autocommand to only map the following keys
 -- after the language server attaches to the current buffer
@@ -77,8 +75,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
         vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
         vim.keymap.set('n', '<leader>gr', vim.lsp.buf.references, opts)
-        vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, opts)
-        vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, opts)
         -- replaced by conform
         -- vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, opts)
     end,
