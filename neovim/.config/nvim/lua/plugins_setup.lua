@@ -49,10 +49,6 @@ local lsp_settings = {
 
 local default_lsp_setup = {
     capabilities = capabilities,
-    handlers = {
-        ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "solid" }),
-        ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "solid" }),
-    }
 }
 for name, config in pairs(lsp_settings) do
     lspconfig[name].setup(vim.tbl_deep_extend("force", config, default_lsp_setup))
