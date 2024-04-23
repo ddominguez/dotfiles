@@ -47,6 +47,11 @@ local lsp_settings = {
     }
 }
 
+local biome_cli = vim.fn.getcwd() .. "/node_modules/.bin/biome"
+if is_deno == false and vim.fn.executable(biome_cli) then
+    lsp_settings["biome"] = { cmd = { biome_cli, "lsp-proxy" } }
+end
+
 local default_lsp_setup = {
     capabilities = capabilities,
 }
@@ -98,7 +103,7 @@ cmp.setup {
         ['<C-Space>'] = cmp.mapping.complete(),
         ['<CR>'] = cmp.mapping.confirm {
             behavior = cmp.ConfirmBehavior.Replace,
-            select = true,
+            select = false,
         },
     }),
     sources = {
@@ -117,6 +122,7 @@ cmp.setup {
     performance = {
         max_view_entries = 25,
     },
+    preselect = cmp.PreselectMode.None,
 }
 
 -- conform setup
