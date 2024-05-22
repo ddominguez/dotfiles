@@ -43,7 +43,8 @@ endif
 
 call plug#begin()
 Plug 'tpope/vim-commentary'
-Plug 'yegappan/lsp'
+" Plug 'yegappan/lsp'
+Plug 'ddominguez/lsp', { 'branch': 'unescape-non-breaking-spaces' }
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'lighthaus-theme/vim-lighthaus'
@@ -56,23 +57,13 @@ colorscheme lighthaus
 set completeopt=menuone
 set shortmess+=c
 
-function! FindConfigFile(...)
-    for f in a:000
-        if filereadable(getcwd().'/'.f)
-            return 1
-        endif
-    endfor
-    return 0
-endfunction
-
 let lspOpts = #{
 \   diagSignErrorText: 'E',
 \   diagSignHintText: 'H',
 \   diagSignInfoText: 'I',
 \   diagSignWarningText: 'W',
-\   hoverInPreview: v:true,
+\   hoverInPreview: v:false,
 \ }
-autocmd User LspSetup call LspOptionsSet(lspOpts)
 
 let lspServers = [
 \ #{
@@ -87,7 +78,14 @@ let lspServers = [
 \     filetype: 'python',
 \     path: exepath('pyright-langserver'),
 \     args: ['--stdio'],
-\     workspaceConfig: #{python: #{pythonPath: exepath('python')}}
+\     workspaceConfig: #{python: #{pythonPath: exepath('python')}},
+\   },
+\ #{
+\     name: 'ruff-lsp',
+\     filetype: 'python',
+\     path: exepath('ruff-lsp'),
+\     args: [],
+\     features: #{codeAction: v:true, documentFormatting: v:true},
 \   },
 \ #{
 \     name: 'rustanalyzer',
@@ -97,14 +95,20 @@ let lspServers = [
 \     syncInit: v:true
 \   },
 \ ]
-autocmd User LspSetup call LspAddServer(lspServers)
 
-au FileType go,python,rust nmap <buffer> <silent> K :LspHover<CR>
-au FileType go,python,rust nmap <buffer> <silent> gd :LspGotoDefinition<CR>
-au FileType go,python,rust nmap <buffer> <silent> <leader>e :LspDiagCurrent<CR>
-au FileType go,python,rust nmap <buffer> <silent> <leader>f :LspFormat<CR>
-au FileType go,python,rust nmap <buffer> <silent> <leader>gr :LspShowReferences<CR>
-au FileType go,python,rust nmap <buffer> <silent> <leader>rn :LspRename<CR>
+au User LspSetup call LspOptionsSet(lspOpts)
+au User LspSetup call LspAddServer(lspServers)
+au User LspAttached call LspKeyMaps()
+
+function! LspKeyMaps()
+    setlocal keywordprg=:LspHover
+    nmap <buffer> <silent> gd :LspGotoDefinition<CR>
+    nmap <buffer> <silent> <leader>e :LspDiagCurrent<CR>
+    nmap <buffer> <silent> <leader>f :LspFormat<CR>
+    nmap <buffer> <silent> <leader>gr :LspShowReferences<CR>
+    nmap <buffer> <silent> <leader>rn :LspRename<CR>
+    nmap <buffer> <silent> <leader>ca :LspCodeAction<CR>
+endfunction
 
 " fzf commands
 nmap <leader>ff :Files<CR>
