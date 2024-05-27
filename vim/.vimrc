@@ -47,6 +47,7 @@ Plug 'tpope/vim-commentary'
 Plug 'ddominguez/lsp', { 'branch': 'unescape-non-breaking-spaces' }
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
+Plug 'elixir-editors/vim-elixir'
 Plug 'lighthaus-theme/vim-lighthaus'
 call plug#end()
 
@@ -81,20 +82,51 @@ let lspServers = [
 \     workspaceConfig: #{python: #{pythonPath: exepath('python')}},
 \   },
 \ #{
-\     name: 'ruff-lsp',
-\     filetype: 'python',
-\     path: exepath('ruff-lsp'),
-\     args: [],
-\     features: #{codeAction: v:true, documentFormatting: v:true},
-\   },
-\ #{
 \     name: 'rustanalyzer',
-\     filetype: ['rust'],
+\     filetype: 'rust',
 \     path: exepath('rust-analyzer'),
 \     args: [],
 \     syncInit: v:true
 \   },
+\ #{
+\     name: 'tsserver',
+\     filetype: ['javascript', 'javascriptreact', 'typescript', 'typescriptreact'],
+\     path: exepath('typescript-language-server'),
+\     args: ['--stdio'],
+\   },
+\ #{
+\     name: 'lexical',
+\     filetype: ['elixir', 'eelixir'],
+\     path: expand("$HOME/.vpm") . '/packages/lexical/_build/dev/package/lexical/bin/start_lexical.sh',
+\     args: [],
+\     syncInit: v:true
+\   },
 \ ]
+
+" ruff is my default python formatter
+" Do not use Ruff if black is available
+let venvBlack = executable(expand("$VIRTUAL_ENV/bin/black"))
+if &ft == 'python' && !venvBlack
+    let lspServers += [#{
+\     name: 'ruff',
+\     filetype: 'python',
+\     path: exepath('ruff'),
+\     args: ['server', '--preview'],
+\     features: #{codeAction: v:true, documentFormatting: v:true},
+\   }]
+endif
+
+" Allow biome to handle linting and formatting, if available
+let biome = exepath("./node_modules/.bin/biome")
+if executable(biome)
+    let lspServers += [#{
+\     name: 'biome',
+\     filetype: ['javascript', 'javascriptreact', 'typescript', 'typescriptreact'],
+\     path: biome,
+\     args: ['lsp-proxy'],
+\     features: #{codeAction: v:true, documentFormatting: v:true},
+\   }]
+endif
 
 au User LspSetup call LspOptionsSet(lspOpts)
 au User LspSetup call LspAddServer(lspServers)
