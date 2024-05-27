@@ -58,6 +58,10 @@ colorscheme lighthaus
 set completeopt=menuone
 set shortmess+=c
 
+let biome = exepath("./node_modules/.bin/biome")
+let have_biome = executable(biome)
+let use_tsserver_format = !have_biome
+
 let lspOpts = #{
 \   diagSignErrorText: 'E',
 \   diagSignHintText: 'H',
@@ -93,6 +97,7 @@ let lspServers = [
 \     filetype: ['javascript', 'javascriptreact', 'typescript', 'typescriptreact'],
 \     path: exepath('typescript-language-server'),
 \     args: ['--stdio'],
+\     features: #{documentFormatting: use_tsserver_format},
 \   },
 \ #{
 \     name: 'lexical',
@@ -117,8 +122,7 @@ if &ft == 'python' && !venvBlack
 endif
 
 " Allow biome to handle linting and formatting, if available
-let biome = exepath("./node_modules/.bin/biome")
-if executable(biome)
+if have_biome
     let lspServers += [#{
 \     name: 'biome',
 \     filetype: ['javascript', 'javascriptreact', 'typescript', 'typescriptreact'],
