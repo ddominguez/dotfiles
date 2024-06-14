@@ -43,8 +43,7 @@ endif
 
 call plug#begin()
 Plug 'tpope/vim-commentary'
-" Plug 'yegappan/lsp'
-Plug 'ddominguez/lsp', { 'branch': 'unescape-non-breaking-spaces' }
+Plug 'yegappan/lsp'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'elixir-editors/vim-elixir'
@@ -52,7 +51,7 @@ Plug 'lighthaus-theme/vim-lighthaus'
 call plug#end()
 
 set background=dark
-colorscheme lighthaus
+colorscheme retrobox
 
 " autocomplete
 set completeopt=menuone
