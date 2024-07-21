@@ -129,20 +129,19 @@ cmp.setup {
 local conform = require("conform")
 conform.setup({
     formatters_by_ft = {
-        javascript = { { "biome", "prettier" } },
-        typescript = { { "biome", "prettier" } },
-        javascriptreact = { { "biome", "prettier" } },
-        typescriptreact = { { "biome", "prettier" } },
-        python = { { "ruff_format", "black" } }
+        javascript = { "prettier", "biome" },
+        typescript = { "prettier", "biome" },
+        javascriptreact = { "prettier", "biome" },
+        typescriptreact = { "prettier", "biome" },
+        python = { "black", "ruff_format" }
+    },
+    default_format_opts = {
+        lsp_format = "fallback",
+        stop_after_first = true,
+        timeout_ms = 1000,
     }
 })
-vim.keymap.set('n', '<leader>f', function()
-    conform.format({
-        lsp_fallback = true,
-        async = false,
-        timeout_ms = 1000,
-    })
-end)
+vim.keymap.set('n', '<leader>f', function() conform.format() end)
 
 -- treesitter setup
 require('nvim-treesitter.configs').setup {
