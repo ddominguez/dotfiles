@@ -48,12 +48,6 @@ require("packer").startup(function(use)
     use("hrsh7th/cmp-nvim-lsp")
     use("L3MON4D3/LuaSnip")
     use("saadparwaiz1/cmp_luasnip")
-    use {
-        "numToStr/Comment.nvim",
-        config = function()
-            require("Comment").setup()
-        end
-    }
     use("lewis6991/gitsigns.nvim")
     use("junegunn/fzf")
     use("junegunn/fzf.vim")
@@ -62,10 +56,9 @@ require("packer").startup(function(use)
         "nvim-treesitter/nvim-treesitter",
         run = ":TSUpdate"
     }
-    use("lighthaus-theme/vim-lighthaus")
 end)
 
-vim.cmd([[colorscheme lighthaus]])
+vim.cmd([[colorscheme retrobox]])
 
 -- go templ ft
 vim.filetype.add({
