@@ -77,6 +77,7 @@ vim.filetype.add({
 -- keymaps
 vim.cmd([[au FileType help,qf nmap <buffer> q :q<CR>]])
 vim.cmd([[au FileType gleam nmap <buffer> <leader>x :!gleam run<CR>]])
+vim.cmd([[au FileType python nmap <buffer> <leader>x :!python %<CR>]])
 
 -- fzf mappings
 vim.keymap.set('n', '<leader>ff', ":Files<cr>")
