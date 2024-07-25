@@ -52,6 +52,7 @@ call plug#end()
 
 set background=dark
 colorscheme retrobox
+hi Function gui=None cterm=NONE
 
 " autocomplete
 set completeopt=menuone
