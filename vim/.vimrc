@@ -47,7 +47,6 @@ Plug 'yegappan/lsp'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'elixir-editors/vim-elixir'
-Plug 'lighthaus-theme/vim-lighthaus'
 call plug#end()
 
 set background=dark
@@ -116,7 +115,7 @@ if &ft == 'python' && !venvBlack
 \     name: 'ruff',
 \     filetype: 'python',
 \     path: exepath('ruff'),
-\     args: ['server', '--preview'],
+\     args: ['server'],
 \     features: #{codeAction: v:true, documentFormatting: v:true},
 \   }]
 endif
