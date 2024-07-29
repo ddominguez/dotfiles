@@ -6,6 +6,8 @@ local capabilities = require("cmp_nvim_lsp").default_capabilities()
 local lspconfig = require('lspconfig')
 local lsp_util = require('lspconfig.util')
 
+--- Checks if current working dir is a deno project.
+---@return boolean
 local is_deno_proj = function()
     if lsp_util.root_pattern("deno.json", "deno.jsonc")(vim.fn.getcwd()) then
         return true
@@ -13,6 +15,13 @@ local is_deno_proj = function()
     return false
 end
 local is_deno = is_deno_proj()
+
+--- Checks if an executable exists.
+---@param exe string
+---@return boolean
+local exe_exists = function(exe)
+    return vim.fn.executable(exe) == 1
+end
 
 local lsp_settings = {
     cssls = {},
@@ -44,11 +53,14 @@ local lsp_settings = {
     tsserver = {
         autostart = is_deno == false,
         single_file_support = is_deno == false,
-    }
+    },
+    ruff = {
+        autostart = exe_exists(vim.fn.expand("$VIRTUAL_ENV/bin/black")) == false,
+    },
 }
 
 local biome_cli = vim.fn.getcwd() .. "/node_modules/.bin/biome"
-if is_deno == false and vim.fn.executable(biome_cli) then
+if is_deno == false and exe_exists(biome_cli) then
     lsp_settings["biome"] = { cmd = { biome_cli, "lsp-proxy" } }
 end
 
@@ -72,13 +84,16 @@ vim.diagnostic.config({ virtual_text = false })
 -- after the language server attaches to the current buffer
 vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('UserLspConfig', {}),
-    callback = function(ev)
-        -- Enable completion triggered by <c-x><c-o>
-        -- vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+    callback = function(args)
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        if client == nil then
+            return
+        end
+        if client.name == "ruff" then
+            client.server_capabilities.hoverProvider = false
+        end
 
-        -- Buffer local mappings.
-        -- See `:help vim.lsp.*` for documentation on any of the below functions
-        local opts = { buffer = ev.buf }
+        local opts = { buffer = args.buf }
         vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
         vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
         vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
@@ -133,7 +148,7 @@ conform.setup({
         typescript = { "prettier", "biome" },
         javascriptreact = { "prettier", "biome" },
         typescriptreact = { "prettier", "biome" },
-        python = { "black", "ruff_format" }
+        python = { "black" }
     },
     default_format_opts = {
         lsp_format = "fallback",
