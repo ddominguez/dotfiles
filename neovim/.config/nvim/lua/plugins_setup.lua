@@ -106,6 +106,26 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end,
 })
 
+local function custom_hover_handler(handler, focusable)
+    return function(err, result, ctx, config)
+        local bufnr, winnr = handler(
+            err,
+            result,
+            ctx,
+            vim.tbl_deep_extend('force', config or {}, {
+                focusable = focusable,
+            })
+        )
+        if not bufnr or not winnr then
+            return
+        end
+        vim.wo[winnr].concealcursor = 'n'
+        vim.wo[winnr].wrap = true
+        vim.wo[winnr].linebreak = true
+    end
+end
+vim.lsp.handlers['textDocument/hover'] = custom_hover_handler(vim.lsp.handlers.hover, true)
+
 -- nvim-cmp setup
 local cmp = require('cmp')
 cmp.setup {
