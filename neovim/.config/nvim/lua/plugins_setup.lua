@@ -47,7 +47,9 @@ local lsp_settings = {
             }
         }
     },
-    pyright = {},
+    pyright = {
+        root_dir = lsp_util.root_pattern('.git', '.venv', 'requirements.txt', 'pyproject.toml') or vim.fn.getcwd()
+    },
     rust_analyzer = {},
     templ = {},
     tsserver = {
@@ -106,25 +108,45 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end,
 })
 
-local function custom_hover_handler(handler, focusable)
+local function hover_handler(handler, focusable)
     return function(err, result, ctx, config)
+        local client = vim.lsp.get_client_by_id(ctx.client_id)
+        local is_pyright = client and client.name == 'pyright'
+        if is_pyright and result then
+            result.contents = vim.tbl_map(
+                function(line)
+                    line = string.gsub(line, '&nbsp;', ' ')
+                    line = string.gsub(line, "&gt;", ">")
+                    line = string.gsub(line, "&lt;", "<")
+                    line = string.gsub(line, '\\', '')
+                    line = string.gsub(line, '```python', '')
+                    line = string.gsub(line, '```', '')
+                    return line
+                end,
+                result.contents
+            )
+        end
         local bufnr, winnr = handler(
             err,
             result,
             ctx,
             vim.tbl_deep_extend('force', config or {}, {
                 focusable = focusable,
+                max_width = math.floor(vim.o.columns * 0.50),
             })
         )
         if not bufnr or not winnr then
             return
+        end
+        if is_pyright then
+            vim.bo[bufnr].ft = 'text'
         end
         vim.wo[winnr].concealcursor = 'n'
         vim.wo[winnr].wrap = true
         vim.wo[winnr].linebreak = true
     end
 end
-vim.lsp.handlers['textDocument/hover'] = custom_hover_handler(vim.lsp.handlers.hover, true)
+vim.lsp.handlers['textDocument/hover'] = hover_handler(vim.lsp.handlers.hover, true)
 
 -- nvim-cmp setup
 local cmp = require('cmp')
