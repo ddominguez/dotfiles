@@ -132,7 +132,7 @@ local function hover_handler(handler, focusable)
             ctx,
             vim.tbl_deep_extend('force', config or {}, {
                 focusable = focusable,
-                max_width = math.floor(vim.o.columns * 0.50),
+                max_width = math.floor(vim.o.columns * 0.65),
             })
         )
         if not bufnr or not winnr then
