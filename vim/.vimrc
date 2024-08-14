@@ -136,7 +136,7 @@ au User LspSetup call LspAddServer(lspServers)
 au User LspAttached call LspKeyMaps()
 
 function! LspKeyMaps()
-    setlocal keywordprg=:LspHover
+    nmap <buffer> <silent> K :LspHover<CR>
     nmap <buffer> <silent> gd :LspGotoDefinition<CR>
     nmap <buffer> <silent> <leader>e :LspDiagCurrent<CR>
     nmap <buffer> <silent> <leader>f :LspFormat<CR>
