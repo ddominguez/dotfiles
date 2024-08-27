@@ -52,6 +52,8 @@ call plug#end()
 set background=dark
 colorscheme retrobox
 hi Function gui=None cterm=NONE
+hi Normal guibg=#151515
+hi SignColumn guibg=#151515
 
 " autocomplete
 set completeopt=menuone
