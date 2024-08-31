@@ -47,6 +47,7 @@ Plug 'yegappan/lsp'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'elixir-editors/vim-elixir'
+Plug 'gleam-lang/gleam.vim'
 call plug#end()
 
 set background=dark
@@ -106,6 +107,14 @@ let lspServers = [
 \     path: expand("$HOME/.vpm") . '/packages/lexical/_build/dev/package/lexical/bin/start_lexical.sh',
 \     args: [],
 \     syncInit: v:true
+\   },
+\ #{
+\     name: 'gleam',
+\     debug: v:true,
+\     filetype: 'gleam',
+\     path: exepath('gleam'),
+\     args: ['lsp'],
+\     syncInit: v:true,
 \   },
 \ ]
 
