@@ -33,6 +33,7 @@ vim.api.nvim_create_autocmd('Filetype', {
     },
     command = 'setlocal shiftwidth=2 tabstop=2 softtabstop=2'
 })
+vim.cmd([[au FileType gleam setlocal commentstring=//%s smartindent]])
 vim.cmd([[au FileType qf setlocal wrap linebreak]])
 
 -- vim packages
