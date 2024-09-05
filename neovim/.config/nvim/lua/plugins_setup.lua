@@ -141,7 +141,6 @@ local function hover_handler(handler, focusable)
         if is_pyright then
             vim.bo[bufnr].ft = 'text'
         end
-        vim.wo[winnr].concealcursor = 'n'
         vim.wo[winnr].wrap = true
         vim.wo[winnr].linebreak = true
     end
