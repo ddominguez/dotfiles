@@ -52,7 +52,7 @@ local lsp_settings = {
     },
     rust_analyzer = {},
     templ = {},
-    tsserver = {
+    ts_ls = {
         autostart = is_deno == false,
         single_file_support = is_deno == false,
     },
