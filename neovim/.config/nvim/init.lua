@@ -61,6 +61,8 @@ end)
 
 vim.cmd([[colorscheme retrobox]])
 vim.cmd([[hi Function gui=None cterm=NONE]])
+vim.cmd([[hi Normal guibg=#151515]])
+vim.cmd([[hi SignColumn guibg=#151515]])
 
 -- go templ ft
 vim.filetype.add({
