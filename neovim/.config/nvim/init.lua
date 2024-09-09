@@ -5,7 +5,6 @@ set.tabstop = 4
 set.softtabstop = 4
 set.shiftwidth = 4
 set.expandtab = true
--- set.smartindent = true
 set.hlsearch = false
 set.incsearch = true
 set.wrap = false
@@ -19,9 +18,7 @@ set.laststatus = 1
 vim.g.mapleader = " "
 
 set.completeopt = "menuone"
-vim.cmd([[set shortmess+=c]])
-
-set.background = "dark"
+set.shortmess:append('c')
 
 -- configure 2 space indentation
 vim.api.nvim_create_augroup('setIndent', { clear = true })
@@ -33,8 +30,8 @@ vim.api.nvim_create_autocmd('Filetype', {
     },
     command = 'setlocal shiftwidth=2 tabstop=2 softtabstop=2'
 })
-vim.cmd([[au FileType gleam setlocal commentstring=//%s smartindent]])
-vim.cmd([[au FileType qf setlocal wrap linebreak]])
+vim.cmd('au FileType gleam setlocal commentstring=//%s smartindent')
+vim.cmd('au FileType qf setlocal wrap linebreak')
 
 -- vim packages
 -- Find out if this could replace Mason
@@ -59,10 +56,11 @@ require("packer").startup(function(use)
     }
 end)
 
-vim.cmd([[colorscheme retrobox]])
-vim.cmd([[hi Function gui=None cterm=NONE]])
-vim.cmd([[hi Normal guibg=#151515]])
-vim.cmd([[hi SignColumn guibg=#151515]])
+set.background = "dark"
+vim.cmd('colorscheme retrobox')
+vim.cmd('hi Function gui=None cterm=NONE')
+vim.cmd('hi Normal guibg=#151515')
+vim.cmd('hi SignColumn guibg=#151515')
 
 -- go templ ft
 vim.filetype.add({
@@ -72,9 +70,9 @@ vim.filetype.add({
 })
 
 -- keymaps
-vim.cmd([[au FileType help,qf nmap <buffer> q :q<CR>]])
-vim.cmd([[au FileType gleam nmap <buffer> <leader>x :!gleam run<CR>]])
-vim.cmd([[au FileType python nmap <buffer> <leader>x :!python %<CR>]])
+vim.cmd('au FileType help,qf nmap <buffer> q :q<CR>')
+vim.cmd('au FileType gleam nmap <buffer> <leader>x :!gleam run<CR>')
+vim.cmd('au FileType python nmap <buffer> <leader>x :!python %<CR>')
 
 -- fzf mappings
 vim.keymap.set('n', '<leader>ff', ":Files<cr>")
