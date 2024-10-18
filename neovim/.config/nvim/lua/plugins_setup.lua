@@ -4,12 +4,11 @@ require("gitsigns").setup()
 -- lsp and autocomplete setup
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 local lspconfig = require('lspconfig')
-local lsp_util = require('lspconfig.util')
 
 --- Checks if current working dir is a deno project.
 ---@return boolean
 local is_deno_proj = function()
-    if lsp_util.root_pattern("deno.json", "deno.jsonc")(vim.fn.getcwd()) then
+    if vim.fs.root(0, "deno.json", "deno.jsonc") then
         return true
     end
     return false
@@ -47,9 +46,7 @@ local lsp_settings = {
             }
         }
     },
-    pyright = {
-        root_dir = lsp_util.root_pattern('.git', '.venv', 'requirements.txt', 'pyproject.toml') or vim.fn.getcwd()
-    },
+    pyright = {},
     rust_analyzer = {},
     templ = {},
     ts_ls = {
