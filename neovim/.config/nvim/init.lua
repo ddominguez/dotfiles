@@ -15,6 +15,7 @@ set.signcolumn = "yes"
 set.termguicolors = true
 set.mouse = ""
 set.laststatus = 1
+set.swapfile = false
 vim.g.mapleader = " "
 
 set.completeopt = "menuone"
@@ -70,13 +71,16 @@ vim.filetype.add({
 })
 
 -- keymaps
+vim.keymap.set('n', 'bd', ':bd<cr>', { silent = true })
+vim.keymap.set('n', 'bn', ':bn<cr>', { silent = true })
+vim.keymap.set('n', 'bp', ':bp<cr>', { silent = true })
 vim.cmd('au FileType help,qf nmap <buffer> q :q<CR>')
 vim.cmd('au FileType gleam nmap <buffer> <leader>x :!gleam run<CR>')
 vim.cmd('au FileType python nmap <buffer> <leader>x :!python %<CR>')
 
 -- fzf mappings
-vim.keymap.set('n', '<leader>ff', ":Files<cr>")
-vim.keymap.set('n', '<leader>fb', ":Buffers<cr>")
+vim.keymap.set('n', '<leader>ff', ':Files<cr>')
+vim.keymap.set('n', '<leader>fb', ':Buffers<cr>')
 
 vim.g.loaded_python3_provider = 0
 vim.g.loaded_ruby_provider = 0
