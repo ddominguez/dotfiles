@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+_schema="org.gnome.settings-daemon.plugins.color"
+_schema_get="gsettings get $_schema"
+_schema_set="gsettings set $_schema"
+night_light_enabled="$($_schema_get night-light-enabled)"
+night_light_day_temp=3600
+night_light_evening_temp=3100
+night_light_night_temp=2600
+current_hour="$(date '+%H')"
+day_hour=7
+evening_hour=17
+night_hour=20
+
+is_day=$(("$current_hour" > "$day_hour" && "$current_hour" < "$evening_hour"))
+is_evening=$(("$current_hour" < "$night_hour"))
+
+if [[ $is_day -eq 1 ]]; then
+    $_schema_set night-light-temperature $night_light_day_temp
+elif [[ $is_evening -eq 1 ]]; then
+    $_schema_set night-light-temperature $night_light_evening_temp
+else
+    $_schema_set night-light-temperature $night_light_night_temp
+fi
+
