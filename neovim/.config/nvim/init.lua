@@ -81,6 +81,7 @@ vim.cmd('au FileType python nmap <buffer> <leader>x :!python %<CR>')
 -- fzf mappings
 vim.keymap.set('n', '<leader>ff', ':Files<cr>')
 vim.keymap.set('n', '<leader>fb', ':Buffers<cr>')
+vim.g.fzf_preview_window = {}
 
 vim.g.loaded_python3_provider = 0
 vim.g.loaded_ruby_provider = 0
