@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+if ! type -p xrandr &> /dev/null; then
+	exit 1
+fi
+
+primary=$(xrandr | grep primary | cut -d ' ' -f 1)
+built_in="eDP-1"
+
+if [[ "$primary" == "$built_in" ]]; then
+    echo "built-in"
+else
+    echo "external"
+fi
+
