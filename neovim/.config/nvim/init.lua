@@ -55,13 +55,14 @@ require("packer").startup(function(use)
         "nvim-treesitter/nvim-treesitter",
         run = ":TSUpdate"
     }
+    use("ayu-theme/ayu-vim")
 end)
 
-set.background = "dark"
-vim.cmd('colorscheme retrobox')
-vim.cmd('hi Function gui=None cterm=NONE')
-vim.cmd('hi Normal guibg=#151515')
-vim.cmd('hi SignColumn guibg=#151515')
+vim.api.nvim_set_var('ayucolor', 'mirage')
+vim.cmd('colorscheme ayu')
+vim.api.nvim_set_hl(0, "Normal", { bg="#1F2430" })
+vim.api.nvim_set_hl(0, "SignColumn", { bg="#1F2430" })
+vim.api.nvim_set_hl(0, "NormalFloat", { link = "Pmenu" })
 
 -- go templ ft
 vim.filetype.add({

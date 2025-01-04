@@ -48,13 +48,13 @@ Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'elixir-editors/vim-elixir'
 Plug 'gleam-lang/gleam.vim'
+Plug 'ayu-theme/ayu-vim'
 call plug#end()
 
-set background=dark
-colorscheme retrobox
-hi Function gui=None cterm=NONE
-hi Normal guibg=#151515
-hi SignColumn guibg=#151515
+let ayucolor="mirage"
+colorscheme ayu
+hi Normal guibg=#1F2430
+hi SignColumn guibg=#1F2430
 
 " autocomplete
 set completeopt=menuone
