@@ -7,13 +7,20 @@ night_light_enabled=$($schema_get night-light-enabled)
 night_light_day_temp=3600
 night_light_evening_temp=3100
 night_light_night_temp=2600
+external_display_temp=4600
 current_hour=$(date '+%H')
 day_hour=7
 evening_hour=17
 night_hour=20
 
+primary_display=$(primary-display)
 is_day=$(($current_hour > $day_hour && $current_hour < $evening_hour))
 is_evening=$(($current_hour >= $evening_hour && $current_hour < $night_hour))
+
+if [[ $primary_display == "external" ]]; then
+    $schema_set night-light-temperature $external_display_temp
+    exit 1
+fi
 
 if [[ $is_day -eq 1 ]]; then
     $schema_set night-light-temperature $night_light_day_temp
