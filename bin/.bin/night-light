@@ -19,7 +19,7 @@ is_evening=$(($current_hour >= $evening_hour && $current_hour < $night_hour))
 
 if [[ $primary_display == "external" ]]; then
     $schema_set night-light-temperature $external_display_temp
-    exit 1
+    exit 0
 fi
 
 if [[ $is_day -eq 1 ]]; then
