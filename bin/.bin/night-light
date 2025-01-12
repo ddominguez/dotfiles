@@ -13,7 +13,7 @@ day_hour=7
 evening_hour=17
 night_hour=20
 
-primary_display=$(primary-display)
+primary_display=$("$HOME/.bin/primary-display")
 is_day=$(($current_hour > $day_hour && $current_hour < $evening_hour))
 is_evening=$(($current_hour >= $evening_hour && $current_hour < $night_hour))
 
