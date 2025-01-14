@@ -5,8 +5,6 @@ filetype plugin indent on
 let mapleader = " "
 set encoding=utf-8
 set nocompatible
-" set autoindent
-" set smartindent
 set expandtab
 set tabstop=4
 set softtabstop=4
@@ -150,20 +148,23 @@ function! LspKeyMaps()
     nmap <buffer> <silent> K :LspHover<CR>
     nmap <buffer> <silent> gd :LspGotoDefinition<CR>
     nmap <buffer> <silent> <leader>e :LspDiagCurrent<CR>
+    nmap <buffer> <silent> <leader>q :LspDiagShow<CR>
     nmap <buffer> <silent> <leader>f :LspFormat<CR>
     nmap <buffer> <silent> <leader>gr :LspShowReferences<CR>
     nmap <buffer> <silent> <leader>rn :LspRename<CR>
     nmap <buffer> <silent> <leader>ca :LspCodeAction<CR>
 endfunction
 
-" fzf commands
+nmap bn :bn<CR>
+nmap bp :bp<CR>
+nmap bd :bd<CR>
 nmap <leader>ff :Files<CR>
 nmap <leader>fb :Buffers<CR>
 
 au FileType python nmap <buffer> <leader>x :!clear;python %<CR>
 au FileType go nmap <buffer> <leader>x :!clear;go run %<CR>
 au FileType help,qf,lspgfm nmap <buffer> q :q<CR>
-au FileType qf,lspgfm setlocal wrap linebreak
+au FileType qf,lspgfm setlocal wrap linebreak colorcolumn= signcolumn=
 
 " filetypes with 2 space tabs
 au FileType css,html,htmldjango,javascript,json,typescript,typescriptreact
