@@ -68,6 +68,7 @@ let lspOpts = #{
 \   diagSignInfoText: 'I',
 \   diagSignWarningText: 'W',
 \   hoverInPreview: v:false,
+\   condensedCompletionMenu: v:true,
 \ }
 
 let lspServers = [
@@ -160,6 +161,7 @@ nmap bp :bp<CR>
 nmap bd :bd<CR>
 nmap <leader>ff :Files<CR>
 nmap <leader>fb :Buffers<CR>
+let g:fzf_vim = #{preview_window:[]}
 
 au FileType python nmap <buffer> <leader>x :!clear;python %<CR>
 au FileType go nmap <buffer> <leader>x :!clear;go run %<CR>
