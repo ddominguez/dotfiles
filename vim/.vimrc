@@ -159,9 +159,14 @@ endfunction
 nmap bn :bn<CR>
 nmap bp :bp<CR>
 nmap bd :bd<CR>
+
+let g:fzf_vim = #{preview_window:[]}
 nmap <leader>ff :Files<CR>
 nmap <leader>fb :Buffers<CR>
-let g:fzf_vim = #{preview_window:[]}
+
+if executable('xclip')
+    vmap <C-c> :!xclip -f -selection clipboard<CR>
+endif
 
 au FileType python nmap <buffer> <leader>x :!clear;python %<CR>
 au FileType go nmap <buffer> <leader>x :!clear;go run %<CR>
