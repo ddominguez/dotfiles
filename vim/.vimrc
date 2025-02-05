@@ -25,14 +25,13 @@ set nobackup
 set noswapfile
 set nowritebackup
 set ttyfast
-set termguicolors
 
 let vpm_bin = "$HOME/.vpm/bin"
 if (isdirectory(expand(vpm_bin)))
     let $PATH .= ':' . expand(vpm_bin)
 endif
 
-" Plugins
+"Plugins
 let data_dir = '~/.vim'
 if empty(glob(data_dir . '/autoload/plug.vim'))
   silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
@@ -46,15 +45,22 @@ Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'elixir-editors/vim-elixir'
 Plug 'gleam-lang/gleam.vim'
-Plug 'ayu-theme/ayu-vim'
+Plug 'jeffkreeftmeijer/vim-dim'
 call plug#end()
 
-let ayucolor="mirage"
-colorscheme ayu
-hi Normal guibg=#1F2430
-hi SignColumn guibg=#1F2430
+colorscheme grim
+set background=dark
+hi Identifier cterm=NONE
+hi Pmenu ctermbg=0
+hi clear SignColumn
+hi clear MatchParen
+hi SpellBad cterm=underline ctermbg=NONE
+hi SpellLocal cterm=underline ctermbg=NONE
+hi Constant ctermfg=6
+hi Statement cterm=NONE ctermfg=5
+hi PreProc cterm=NONE 
 
-" autocomplete
+"autocomplete
 set completeopt=menuone
 set shortmess+=c
 
@@ -117,8 +123,8 @@ let lspServers = [
 \   },
 \ ]
 
-" ruff is my default python formatter
-" Do not use Ruff if black is available
+"ruff is my default python formatter
+"Do not use Ruff if black is available
 let venvBlack = executable(expand("$VIRTUAL_ENV/bin/black"))
 if &ft == 'python' && !venvBlack
     let lspServers += [#{
@@ -130,7 +136,7 @@ if &ft == 'python' && !venvBlack
 \   }]
 endif
 
-" Allow biome to handle linting and formatting, if available
+"Allow biome to handle linting and formatting, if available
 if have_biome
     let lspServers += [#{
 \     name: 'biome',
@@ -173,6 +179,6 @@ au FileType go nmap <buffer> <leader>x :!clear;go run %<CR>
 au FileType help,qf,lspgfm nmap <buffer> q :q<CR>
 au FileType qf,lspgfm setlocal wrap linebreak colorcolumn= signcolumn=
 
-" filetypes with 2 space tabs
+"filetypes with 2 space tabs
 au FileType css,html,htmldjango,javascript,json,typescript,typescriptreact
             \ setlocal shiftwidth=2 tabstop=2 softtabstop=2
