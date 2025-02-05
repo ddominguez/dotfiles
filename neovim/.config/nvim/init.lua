@@ -55,16 +55,10 @@ require("packer").startup(function(use)
         "nvim-treesitter/nvim-treesitter",
         run = ":TSUpdate"
     }
-    use("ayu-theme/ayu-vim")
+    use("folke/tokyonight.nvim")
 end)
 
-vim.api.nvim_set_var('ayucolor', 'mirage')
-vim.cmd('colorscheme ayu')
-vim.api.nvim_set_hl(0, "Normal", { bg = "#1F2430" })
-vim.api.nvim_set_hl(0, "SignColumn", { bg = "#1F2430" })
-vim.api.nvim_set_hl(0, "NormalFloat", { link = "Pmenu" })
-vim.api.nvim_set_hl(0, "MatchParen", {})
-vim.api.nvim_set_hl(0, "typescriptParens", { link = "MatchParen" })
+vim.cmd('colorscheme tokyonight-night')
 
 -- go templ ft
 vim.filetype.add({
