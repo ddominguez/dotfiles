@@ -50,15 +50,16 @@ call plug#end()
 
 colorscheme grim
 set background=dark
-hi Identifier cterm=NONE
-hi Pmenu ctermbg=0
 hi clear SignColumn
 hi clear MatchParen
-hi SpellBad cterm=underline ctermbg=NONE
-hi SpellLocal cterm=underline ctermbg=NONE
 hi Constant ctermfg=6
-hi Statement cterm=NONE ctermfg=5
-hi PreProc cterm=NONE 
+hi ErrorMsg ctermbg=None ctermfg=1
+hi Identifier cterm=None
+hi Pmenu ctermbg=0
+hi PreProc cterm=None
+hi SpellBad cterm=underline ctermbg=None
+hi SpellLocal cterm=underline ctermbg=None
+hi Statement cterm=None ctermfg=5
 
 "autocomplete
 set completeopt=menuone
