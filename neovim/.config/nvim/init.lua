@@ -12,7 +12,6 @@ set.scrolloff = 6
 set.cmdheight = 1
 set.colorcolumn = "80"
 set.signcolumn = "yes"
-set.termguicolors = true
 set.mouse = ""
 set.laststatus = 1
 set.swapfile = false
@@ -55,10 +54,18 @@ require("packer").startup(function(use)
         "nvim-treesitter/nvim-treesitter",
         run = ":TSUpdate"
     }
-    use("folke/tokyonight.nvim")
+    use("jeffkreeftmeijer/vim-dim")
 end)
 
-vim.cmd('colorscheme tokyonight-night')
+-- termguicolors must be disabled if I want
+-- to use the cterm colors
+set.termguicolors = false
+vim.cmd('colorscheme dim')
+vim.api.nvim_set_hl(0, 'SignColumn', {})
+vim.api.nvim_set_hl(0, 'MatchParen', {})
+vim.api.nvim_set_hl(0, 'NormalFloat', { ctermbg = 0 })
+vim.api.nvim_set_hl(0, 'Pmenu', { ctermbg = 0 })
+vim.api.nvim_set_hl(0, 'Statement', { ctermfg=3, bold=false })
 
 -- go templ ft
 vim.filetype.add({
