@@ -65,7 +65,9 @@ vim.api.nvim_set_hl(0, 'SignColumn', {})
 vim.api.nvim_set_hl(0, 'MatchParen', {})
 vim.api.nvim_set_hl(0, 'NormalFloat', { ctermbg = 0 })
 vim.api.nvim_set_hl(0, 'Pmenu', { ctermbg = 0 })
-vim.api.nvim_set_hl(0, 'Statement', { ctermfg=3, bold=false })
+vim.api.nvim_set_hl(0, 'Statement', { ctermfg = 3, bold = false })
+vim.api.nvim_set_hl(0, 'Conceal', { ctermfg = 7 })
+vim.api.nvim_set_hl(0, 'ColorColumn', { ctermbg = 0 })
 
 -- go templ ft
 vim.filetype.add({
@@ -86,6 +88,24 @@ vim.cmd('au FileType python nmap <buffer> <leader>x :!python %<CR>')
 vim.keymap.set('n', '<leader>ff', ':Files<cr>')
 vim.keymap.set('n', '<leader>fb', ':Buffers<cr>')
 vim.g.fzf_preview_window = {}
+vim.g.fzf_layout = {
+    window = {
+        width = 0.5,
+        height = 0.5,
+        border = "sharp",
+    }
+}
+vim.g.fzf_colors = {
+    ["fg+"] = { "fg", "NonText" },
+    ["bg+"] = { "bg", "Pmenu" },
+    ["hl+"] = { "fg", "Statement" },
+    gutter  = { "bg", "Pmenu" },
+    info    = { "fg", "PreProc" },
+    border  = { "fg", "NonText" },
+    prompt  = { "fg", "NonText" },
+    pointer = { "fg", "WarningMsg" },
+    marker  = { "fg", "NonText" },
+}
 
 vim.g.loaded_python3_provider = 0
 vim.g.loaded_ruby_provider = 0
