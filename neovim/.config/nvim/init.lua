@@ -90,21 +90,13 @@ vim.keymap.set('n', '<leader>fb', ':Buffers<cr>')
 vim.g.fzf_preview_window = {}
 vim.g.fzf_layout = {
     window = {
-        width = 0.5,
+        width = 0.8,
         height = 0.5,
         border = "sharp",
     }
 }
 vim.g.fzf_colors = {
-    ["fg+"] = { "fg", "NonText" },
-    ["bg+"] = { "bg", "Pmenu" },
-    ["hl+"] = { "fg", "Statement" },
-    gutter  = { "bg", "Pmenu" },
-    info    = { "fg", "PreProc" },
-    border  = { "fg", "NonText" },
-    prompt  = { "fg", "NonText" },
-    pointer = { "fg", "WarningMsg" },
-    marker  = { "fg", "NonText" },
+    fg = { "fg", "Normal" },
 }
 
 vim.g.loaded_python3_provider = 0

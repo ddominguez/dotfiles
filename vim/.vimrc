@@ -76,6 +76,7 @@ let lspOpts = #{
 \   diagSignWarningText: 'W',
 \   hoverInPreview: v:false,
 \   condensedCompletionMenu: v:true,
+\   noNewlineInCompletion: v:true,
 \ }
 
 let lspServers = [
@@ -167,9 +168,19 @@ nmap bn :bn<CR>
 nmap bp :bp<CR>
 nmap bd :bd<CR>
 
-let g:fzf_vim = #{preview_window:[]}
 nmap <leader>ff :Files<CR>
 nmap <leader>fb :Buffers<CR>
+let g:fzf_vim = #{preview_window:[]}
+let g:fzf_layout = #{
+\    window: #{
+\        width: 0.8,
+\        height: 0.5,
+\        border: 'sharp',
+\    }
+\}
+"this is needed if I want fzf.vim to use the
+"colors settings from FZF_DEFAUL_OPTS
+let g:fzf_colors = #{fg: ["fg", "Normal"]}
 
 if executable('xclip')
     vmap <C-c> :!xclip -f -selection clipboard<CR>
