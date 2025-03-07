@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+# Color theme selector for the Ptyxis terminal
+
+if ! command -v fzf &> /dev/null; then
+  echo "fzf not is not found"
+  exit 0
+fi
+
+if [[ -z $PTYXIS_PROFILE ]]; then
+  echo "PTYXIS_PROFILE is not set or Ptyxis is not current terminal"
+  exit 0
+fi
+
+palettes_dir="$HOME/.local/share/org.gnome.Ptyxis/palettes"
+if [[ ! -d "$palettes_dir" ]]; then
+    echo "$palettes_dir not found"
+    exit 0
+fi
+
+# ptyxis provided themes
+installed_themes=("dracula" "Github")
+selected=$({
+    printf "%s\n" "${installed_themes[@]}"
+    ls "$palettes_dir" | sed 's/.*\///; s/\.palette$//'
+} | fzf)
+
+ptyxis_profile_path="/org/gnome/Ptyxis/Profiles/$PTYXIS_PROFILE/"
+gsettings set "org.gnome.Ptyxis.Profile:$ptyxis_profile_path" palette "$selected"
+echo "Ptyxis palette set to $selected"
