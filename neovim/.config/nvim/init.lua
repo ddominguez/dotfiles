@@ -11,7 +11,7 @@ set.wrap = false
 set.scrolloff = 6
 set.cmdheight = 1
 set.colorcolumn = "80"
-set.signcolumn = "yes"
+set.signcolumn = "auto"
 set.mouse = ""
 set.laststatus = 1
 set.swapfile = false
@@ -33,8 +33,6 @@ vim.api.nvim_create_autocmd('Filetype', {
 vim.cmd('au FileType gleam setlocal commentstring=//%s smartindent')
 vim.cmd('au FileType qf setlocal wrap linebreak')
 
--- vim packages
--- Find out if this could replace Mason
 if vim.fn.isdirectory(vim.fn.expand("$HOME/.vpm/bin")) ~= 0 then
     vim.env.PATH = vim.env.PATH .. ":" .. vim.fn.expand("$HOME/.vpm/bin")
 end
