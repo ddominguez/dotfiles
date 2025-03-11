@@ -71,9 +71,6 @@ for name, config in pairs(lsp_settings) do
 end
 
 -- Global mappings.
--- See `:help vim.diagnostic.*` for documentation on any of the below functions
--- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
--- vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
 
@@ -105,18 +102,24 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end,
 })
 
+-- Not a fan of the current hover docs
+local LspFiletype = {
+    pyright = 'python',
+    ts_ls = 'typescript',
+    rust_analyzer = 'rust',
+    gopls = 'go',
+}
 local function hover_handler(handler, focusable)
     return function(err, result, ctx, config)
         local client = vim.lsp.get_client_by_id(ctx.client_id)
-        local is_pyright = client and client.name == 'pyright'
-        if is_pyright and result then
+        if LspFiletype[client.name] and result then
             result.contents = vim.tbl_map(
                 function(line)
                     line = string.gsub(line, '&nbsp;', ' ')
                     line = string.gsub(line, "&gt;", ">")
                     line = string.gsub(line, "&lt;", "<")
                     line = string.gsub(line, '\\', '')
-                    line = string.gsub(line, '```python', '')
+                    line = string.gsub(line, '```' .. LspFiletype[client.name], '')
                     line = string.gsub(line, '```', '')
                     return line
                 end,
@@ -135,7 +138,7 @@ local function hover_handler(handler, focusable)
         if not bufnr or not winnr then
             return
         end
-        if is_pyright then
+        if LspFiletype[client.name] then
             vim.bo[bufnr].ft = 'text'
         end
         vim.wo[winnr].wrap = true
