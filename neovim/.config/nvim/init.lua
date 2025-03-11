@@ -66,22 +66,16 @@ vim.api.nvim_set_hl(0, 'Pmenu', { ctermbg = 0 })
 vim.api.nvim_set_hl(0, 'Statement', { ctermfg = 3, bold = false })
 vim.api.nvim_set_hl(0, 'Conceal', { ctermfg = 7 })
 vim.api.nvim_set_hl(0, 'ColorColumn', { ctermbg = 0 })
-vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", vim.tbl_extend("force",
-    vim.api.nvim_get_hl(0, { name = "DiagnosticUnderlineError" }),
-    { cterm = { undercurl = true }, undercurl = true }
-))
-vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn", vim.tbl_extend("force",
-    vim.api.nvim_get_hl(0, { name = "DiagnosticUnderlineWarn" }),
-    { cterm = { undercurl = true }, undercurl = true }
-))
-vim.api.nvim_set_hl(0, "DiagnosticUnderlineInfo", vim.tbl_extend("force",
-    vim.api.nvim_get_hl(0, { name = "DiagnosticUnderlineInfo" }),
-    { cterm = { undercurl = true }, undercurl = true }
-))
-vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint", vim.tbl_extend("force",
-    vim.api.nvim_get_hl(0, { name = "DiagnosticUnderlineHint" }),
-    { cterm = { undercurl = true }, undercurl = true }
-))
+
+-- when do we see the Ok level??
+-- and should it also have the undercurl??
+local DiagnosticLevels = { "Error", "Warn", "Info", "Hint" }
+for _, level in pairs(DiagnosticLevels) do
+    vim.api.nvim_set_hl(0, "DiagnosticUnderline" .. level, vim.tbl_extend("force",
+        vim.api.nvim_get_hl(0, { name = "DiagnosticUnderline" .. level }),
+        { cterm = { undercurl = true }, undercurl = true }
+    ))
+end
 
 -- go templ ft
 vim.filetype.add({
