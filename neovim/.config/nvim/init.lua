@@ -78,6 +78,10 @@ vim.api.nvim_set_hl(0, "DiagnosticUnderlineInfo", vim.tbl_extend("force",
     vim.api.nvim_get_hl(0, { name = "DiagnosticUnderlineInfo" }),
     { cterm = { undercurl = true }, undercurl = true }
 ))
+vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint", vim.tbl_extend("force",
+    vim.api.nvim_get_hl(0, { name = "DiagnosticUnderlineHint" }),
+    { cterm = { undercurl = true }, undercurl = true }
+))
 
 -- go templ ft
 vim.filetype.add({
