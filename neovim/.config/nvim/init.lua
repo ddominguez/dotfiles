@@ -17,7 +17,7 @@ set.laststatus = 1
 set.swapfile = false
 vim.g.mapleader = " "
 
-set.completeopt = "menuone"
+set.completeopt = "menuone,noselect"
 set.shortmess:append('c')
 
 -- configure 2 space indentation
@@ -39,15 +39,9 @@ end
 
 require("packer").startup(function(use)
     use("wbthomason/packer.nvim")
-    use("neovim/nvim-lspconfig")
-    use("hrsh7th/nvim-cmp")
-    use("hrsh7th/cmp-nvim-lsp")
-    use("L3MON4D3/LuaSnip")
-    use("saadparwaiz1/cmp_luasnip")
     use("lewis6991/gitsigns.nvim")
     use("junegunn/fzf")
     use("junegunn/fzf.vim")
-    use("stevearc/conform.nvim")
     use {
         "nvim-treesitter/nvim-treesitter",
         run = ":TSUpdate"
@@ -66,6 +60,7 @@ vim.api.nvim_set_hl(0, 'Pmenu', { ctermbg = 0 })
 vim.api.nvim_set_hl(0, 'Statement', { ctermfg = 3, bold = false })
 vim.api.nvim_set_hl(0, 'Conceal', { ctermfg = 7 })
 vim.api.nvim_set_hl(0, 'ColorColumn', { ctermbg = 0 })
+vim.api.nvim_set_hl(0, 'LspReferenceTarget', {})
 
 -- when do we see the Ok level??
 -- and should it also have the undercurl??
@@ -112,4 +107,5 @@ vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_node_provider = 0
 
-require "plugins_setup"
+require 'lsp'
+require "plugins"
