@@ -31,7 +31,7 @@ vim.api.nvim_create_autocmd('Filetype', {
     command = 'setlocal shiftwidth=2 tabstop=2 softtabstop=2'
 })
 vim.cmd('au FileType gleam setlocal commentstring=//%s smartindent')
-vim.cmd('au FileType qf setlocal wrap linebreak')
+vim.cmd('au FileType qf setlocal wrap linebreak signcolumn=no colorcolumn=')
 
 if vim.fn.isdirectory(vim.fn.expand("$HOME/.vpm/bin")) ~= 0 then
     vim.env.PATH = vim.env.PATH .. ":" .. vim.fn.expand("$HOME/.vpm/bin")
