@@ -10,7 +10,7 @@ local exe_exists = function(exe)
     return vim.fn.executable(exe) == 1
 end
 
-local lsps = { 'gleam', 'gopls', 'lua_ls', 'pyright', 'rust_analyzer', 'ts_ls' }
+local lsps = { 'gleam', 'gopls', 'lua_ls', 'pyright', 'rust_analyzer', 'ts_ls', 'zls' }
 
 local biome_cli = vim.fn.getcwd() .. "/node_modules/.bin/biome"
 if exe_exists(biome_cli) then
