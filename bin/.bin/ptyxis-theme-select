@@ -3,7 +3,7 @@
 # Color theme selector for the Ptyxis terminal
 
 if ! command -v fzf &> /dev/null; then
-  echo "fzf not is not found"
+  echo "fzf not found"
   exit 0
 fi
 
