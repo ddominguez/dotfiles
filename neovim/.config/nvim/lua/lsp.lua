@@ -17,8 +17,17 @@ if exe_exists(biome_cli) then
     table.insert(lsps, 'biome')
 end
 
-if exe_exists(vim.fn.expand("$VIRTUAL_ENV/bin/black")) == false then
+-- ruff is my default python formatter
+-- If a project is using black, then I'm assuming we are NOT using ruff
+if not exe_exists(vim.fn.expand("$VIRTUAL_ENV/bin/black")) then
     table.insert(lsps, 'ruff')
+end
+
+if exe_exists(vim.fn.expand("$VIRTUAL_ENV/bin/pyrefly")) then
+    lsps = vim.tbl_filter(function(lsp)
+        return lsp ~= 'pyright'
+    end, lsps)
+    table.insert(lsps, 'pyrefly')
 end
 
 vim.lsp.enable(lsps)
