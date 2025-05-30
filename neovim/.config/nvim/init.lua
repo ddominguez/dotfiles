@@ -44,6 +44,7 @@ require("packer").startup(function(use)
     use("junegunn/fzf.vim")
     use {
         "nvim-treesitter/nvim-treesitter",
+        branch = "main",
         run = ":TSUpdate"
     }
     use("jeffkreeftmeijer/vim-dim")
