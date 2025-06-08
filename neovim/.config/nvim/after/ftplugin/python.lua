@@ -8,3 +8,4 @@ else
 end
 
 vim.keymap.set("n", "<leader>x", ":bel term " .. cmd, { buffer = true })
+vim.treesitter.start()
