@@ -1,9 +1,9 @@
 local set = vim.opt
 
 set.compatible = false
-set.tabstop = 4
-set.softtabstop = 4
-set.shiftwidth = 4
+set.tabstop = 2
+set.softtabstop = 2
+set.shiftwidth = 2
 set.expandtab = true
 set.hlsearch = false
 set.incsearch = true
@@ -19,19 +19,6 @@ vim.g.mapleader = " "
 
 set.completeopt = "menuone,noselect"
 set.shortmess:append('c')
-
--- configure 2 space indentation
-vim.api.nvim_create_augroup('setIndent', { clear = true })
-vim.api.nvim_create_autocmd('Filetype', {
-    group = 'setIndent',
-    pattern = {
-        'css', 'gleam', 'html', 'htmldjango', 'javascript', 'javascriptreact',
-        'typescript', 'typescriptreact', 'json', 'jsonc'
-    },
-    command = 'setlocal shiftwidth=2 tabstop=2 softtabstop=2'
-})
-vim.cmd('au FileType gleam setlocal commentstring=//%s smartindent')
-vim.cmd('au FileType qf setlocal wrap linebreak signcolumn=no colorcolumn=')
 
 if vim.fn.isdirectory(vim.fn.expand("$HOME/.vpm/bin")) ~= 0 then
     vim.env.PATH = vim.env.PATH .. ":" .. vim.fn.expand("$HOME/.vpm/bin")
@@ -84,9 +71,6 @@ vim.filetype.add({
 vim.keymap.set('n', 'bd', ':bd<cr>', { silent = true })
 vim.keymap.set('n', 'bn', ':bn<cr>', { silent = true })
 vim.keymap.set('n', 'bp', ':bp<cr>', { silent = true })
-vim.cmd('au FileType help,qf nmap <buffer> q :q<CR>')
-vim.cmd('au FileType gleam nmap <buffer> <leader>x :!gleam run<CR>')
-vim.cmd('au FileType python nmap <buffer> <leader>x :!python %<CR>')
 
 -- fzf mappings
 vim.keymap.set('n', '<leader>ff', ':Files<cr>')
