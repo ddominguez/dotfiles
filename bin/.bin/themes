@@ -36,7 +36,21 @@ kitty_select_theme() {
 }
 
 ptyxis_select_theme() {
-  echo "running ptyxis..."
+  palettes_dir="$HOME/.local/share/org.gnome.Ptyxis/palettes"
+  detect_directory "$palettes_dir"
+
+  installed_themes=("dracula" "Github")
+  selected=$({
+    printf "%s\n" "${installed_themes[@]}"
+    ls "$palettes_dir" | sed 's/.*\///; s/\.palette$//'
+  } | fzf)
+
+  if [[ -z "$selected" ]]; then
+    exit 1
+  fi
+
+  ptyxis_profile_path="/org/gnome/Ptyxis/Profiles/$PTYXIS_PROFILE/"
+  gsettings set "org.gnome.Ptyxis.Profile:$ptyxis_profile_path" palette "$selected"
 }
 
 main() {
