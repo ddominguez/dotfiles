@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+
+die() {
+  red="\033[31m"
+  reset="\033[0m"
+  printf "${red}%s${reset}\n" "$*" >&2
+  exit 1
+}
+
+detect_directory() {
+  if [[ ! -d "$1" ]]; then
+    die "directory not found: $1"
+  fi
+}
+
+detect_fzf() {
+  if ! command -v fzf &> /dev/null; then
+    die "fzf not found"
+  fi
+}
+
+kitty_select_theme() {
+  config_dir="$HOME/.config/kitty"
+  detect_directory "$config_dir"
+
+  themes_dir="$config_dir/themes"
+  detect_directory "$themes_dir"
+
+  selected=$(ls "$themes_dir" | fzf)
+  if [[ -z "$selected" ]]; then
+    exit 1
+  fi
+
+  ln -sf "$themes_dir/$selected" "$config_dir/theme.conf"
+  kitten @ load-config
+}
+
+ptyxis_select_theme() {
+  echo "running ptyxis..."
+}
+
+main() {
+  detect_fzf
+
+  if [[ -n "$KITTY_PID" ]]; then
+    kitty_select_theme
+  elif [[ -n "$PTYXIS_PROFILE" ]]; then
+    ptyxis_select_theme
+  else
+    die "unknown terminal"
+  fi
+
+  exit 0
+}
+
+main
