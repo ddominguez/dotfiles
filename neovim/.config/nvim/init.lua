@@ -40,12 +40,13 @@ end)
 -- termguicolors must be disabled if I want
 -- to use the cterm colors
 set.termguicolors = false
-vim.cmd('colorscheme dim')
+vim.cmd('colorscheme grim')
 vim.api.nvim_set_hl(0, 'SignColumn', {})
 vim.api.nvim_set_hl(0, 'MatchParen', {})
 vim.api.nvim_set_hl(0, 'NormalFloat', { ctermbg = 0 })
 vim.api.nvim_set_hl(0, 'Pmenu', { ctermbg = 0 })
 vim.api.nvim_set_hl(0, 'Statement', { ctermfg = 3, bold = false })
+vim.api.nvim_set_hl(0, 'PreProc', { bold = false })
 vim.api.nvim_set_hl(0, 'Conceal', { ctermfg = 7 })
 vim.api.nvim_set_hl(0, 'ColorColumn', { ctermbg = 0 })
 vim.api.nvim_set_hl(0, 'LspReferenceTarget', {})
