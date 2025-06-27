@@ -34,18 +34,18 @@ require("packer").startup(function(use)
         branch = "main",
         run = ":TSUpdate"
     }
-    use("jeffkreeftmeijer/vim-dim")
 end)
 
 -- termguicolors must be disabled if I want
 -- to use the cterm colors
 set.termguicolors = false
-vim.cmd('colorscheme grim')
+vim.cmd('colorscheme default')
+vim.api.nvim_set_hl(0, 'Comment', { ctermfg = 8 })
 vim.api.nvim_set_hl(0, 'SignColumn', {})
 vim.api.nvim_set_hl(0, 'MatchParen', {})
 vim.api.nvim_set_hl(0, 'NormalFloat', { ctermbg = 0 })
 vim.api.nvim_set_hl(0, 'Pmenu', { ctermbg = 0 })
-vim.api.nvim_set_hl(0, 'Statement', { ctermfg = 3, bold = false })
+vim.api.nvim_set_hl(0, 'Statement', { ctermfg = 5, bold = false })
 vim.api.nvim_set_hl(0, 'PreProc', { bold = false })
 vim.api.nvim_set_hl(0, 'Conceal', { ctermfg = 7 })
 vim.api.nvim_set_hl(0, 'ColorColumn', { ctermbg = 0 })
