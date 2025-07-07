@@ -18,7 +18,7 @@ set.swapfile = false
 vim.g.mapleader = " "
 
 set.completeopt = "menuone,noselect"
-set.shortmess:append('c')
+set.shortmess:append("c")
 
 if vim.fn.isdirectory(vim.fn.expand("$HOME/.vpm/bin")) ~= 0 then
     vim.env.PATH = vim.env.PATH .. ":" .. vim.fn.expand("$HOME/.vpm/bin")
@@ -36,20 +36,19 @@ require("packer").startup(function(use)
     }
 end)
 
--- termguicolors must be disabled if I want
--- to use the cterm colors
 set.termguicolors = false
-vim.cmd('colorscheme default')
-vim.api.nvim_set_hl(0, 'Comment', { ctermfg = 8 })
-vim.api.nvim_set_hl(0, 'SignColumn', {})
-vim.api.nvim_set_hl(0, 'MatchParen', {})
-vim.api.nvim_set_hl(0, 'NormalFloat', { ctermbg = 0 })
-vim.api.nvim_set_hl(0, 'Pmenu', { ctermbg = 0 })
-vim.api.nvim_set_hl(0, 'Statement', { ctermfg = 5, bold = false })
-vim.api.nvim_set_hl(0, 'PreProc', { bold = false })
-vim.api.nvim_set_hl(0, 'Conceal', { ctermfg = 7 })
-vim.api.nvim_set_hl(0, 'ColorColumn', { ctermbg = 0 })
-vim.api.nvim_set_hl(0, 'LspReferenceTarget', {})
+vim.cmd("colorscheme default")
+vim.api.nvim_set_hl(0, "Comment", { ctermfg = 8 })
+vim.api.nvim_set_hl(0, "SignColumn", {})
+vim.api.nvim_set_hl(0, "MatchParen", {})
+vim.api.nvim_set_hl(0, "NormalFloat", { ctermbg = 0 })
+vim.api.nvim_set_hl(0, "Pmenu", { ctermbg = 0 })
+vim.api.nvim_set_hl(0, "Statement", { ctermfg = 5, bold = false })
+vim.api.nvim_set_hl(0, "PreProc", { bold = false })
+vim.api.nvim_set_hl(0, "Conceal", { ctermfg = 7 })
+vim.api.nvim_set_hl(0, "ColorColumn", { ctermbg = 0 })
+vim.api.nvim_set_hl(0, "LspReferenceTarget", {})
+vim.api.nvim_set_hl(0, "StatusLineNC", { cterm = { underline = true } })
 
 -- when do we see the Ok level??
 -- and should it also have the undercurl??
@@ -69,13 +68,13 @@ vim.filetype.add({
 })
 
 -- keymaps
-vim.keymap.set('n', 'bd', ':bd<cr>', { silent = true })
-vim.keymap.set('n', 'bn', ':bn<cr>', { silent = true })
-vim.keymap.set('n', 'bp', ':bp<cr>', { silent = true })
+vim.keymap.set("n", "bd", ":bd<cr>", { silent = true })
+vim.keymap.set("n", "bn", ":bn<cr>", { silent = true })
+vim.keymap.set("n", "bp", ":bp<cr>", { silent = true })
 
 -- fzf mappings
-vim.keymap.set('n', '<leader>ff', ':Files<cr>')
-vim.keymap.set('n', '<leader>fb', ':Buffers<cr>')
+vim.keymap.set("n", "<leader>ff", ":Files<cr>")
+vim.keymap.set("n", "<leader>fb", ":Buffers<cr>")
 vim.g.fzf_preview_window = {}
 vim.g.fzf_layout = {
     window = {
@@ -93,5 +92,5 @@ vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_node_provider = 0
 
-require 'lsp'
+require "lsp"
 require "plugins"
