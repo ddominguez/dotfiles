@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+
+# choice=$(printf "Foo 1\nFoo 2\nFoo 3" | ~/.fzf/bin/fzf)
+#
+# if [ -n "$choice" ]; then
+#   kitty @ send-text --match 'state:overlay_parent' "echo You picked: $choice\n"
+# fi
+
+new_instance() {
+  ~/.local/kitty.app/bin/kitty \
+    --single-instance \
+    --class default \
+    --listen-on=unix:/tmp/ktysocket \
+    --start-as=maximized \
+    -o allow_remote_control=yes
+}
+
+launch_new_window() {
+  local selected=$(find ~/projects -mindepth 1 -maxdepth 1 -type d | fzf)
+  [[ -z $selected ]] && echo "No project selected." && exit 0
+  local class_name=$(basename "$selected" | tr . _)
+
+  ~/.local/kitty.app/bin/kitty @ launch \
+    --type=os-window \
+    --os-window-class "$class_name" \
+    --os-window-state=maximized \
+    --cwd "$selected" \
+    > /dev/null
+}
+
+switch_window() {
+  local selected=$(kitty @ ls | jq -r '.[].wm_class' | fzf)
+  [[ -z "$selected" ]] && echo "switch window error: window name not selected." && exit 0
+  local win_id=$(kitty @ ls | jq -r "
+    .[] 
+    | select(.wm_class == \"$selected\")
+    | .tabs[] 
+    | select(.is_active == true) 
+    | .windows[0].env.KITTY_WINDOW_ID
+  ")
+  [[ -z "$win_id" ]] && echo "switch window error: window id not found." && exit 0
+  kitty @ focus-window --match "id:$win_id"
+}
+
+main() {
+  local cmd="$1"
+  shift
+
+  case "$cmd" in
+    switch)
+      switch_window
+      ;;
+    new)
+      if pgrep -x kitty > /dev/null; then
+        launch_new_window
+      else
+        new_instance
+      fi
+      ;;
+    *)
+      echo "Usage: $0 {new|switch}"
+      ;;
+  esac
+}
+
+main "$@"
