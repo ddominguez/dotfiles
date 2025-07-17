@@ -1,11 +1,5 @@
 #!/usr/bin/env bash
 
-# choice=$(printf "Foo 1\nFoo 2\nFoo 3" | ~/.fzf/bin/fzf)
-#
-# if [ -n "$choice" ]; then
-#   kitty @ send-text --match 'state:overlay_parent' "echo You picked: $choice\n"
-# fi
-
 new_instance() {
   ~/.local/kitty.app/bin/kitty \
     --single-instance \
@@ -44,7 +38,6 @@ switch_window() {
 
 main() {
   local cmd="$1"
-  shift
 
   case "$cmd" in
     switch)
