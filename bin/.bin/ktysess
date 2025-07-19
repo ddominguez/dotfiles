@@ -4,6 +4,7 @@ new_instance() {
   ~/.local/kitty.app/bin/kitty \
     --single-instance \
     --class default \
+    --title default \
     --listen-on=unix:/tmp/ktysocket \
     --start-as=maximized \
     -o allow_remote_control=yes
@@ -17,7 +18,8 @@ launch_new_window() {
   ~/.local/kitty.app/bin/kitty @ launch \
     --type=os-window \
     --os-window-class "$class_name" \
-    --os-window-state=maximized \
+    --os-window-title "$class_name" \
+    --os-window-state maximized \
     --cwd "$selected" \
     > /dev/null
 }
