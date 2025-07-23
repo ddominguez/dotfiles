@@ -11,9 +11,12 @@ new_instance() {
 }
 
 launch_new_window() {
-  local selected=$(find ~/projects -mindepth 1 -maxdepth 1 -type d | fzf)
+  local selected=$(find ~/projects -mindepth 1 -maxdepth 1 -type d | ~/.fzf/bin/fzf)
   [[ -z $selected ]] && echo "No project selected." && exit 0
   local class_name=$(basename "$selected" | tr . _)
+
+  # TODO: Check if kitty window with selected class_name exists.
+  # If it does focus that window.
 
   ~/.local/kitty.app/bin/kitty @ launch \
     --type=os-window \
@@ -25,7 +28,7 @@ launch_new_window() {
 }
 
 switch_window() {
-  local selected=$(kitty @ ls | jq -r '.[].wm_class' | fzf)
+  local selected=$(kitty @ ls | jq -r '.[].wm_class' | ~/.fzf/bin/fzf)
   [[ -z "$selected" ]] && echo "switch window error: window name not selected." && exit 0
   local win_id=$(kitty @ ls | jq -r "
     .[] 
