@@ -10,7 +10,15 @@ local exe_exists = function(exe)
     return vim.fn.executable(exe) == 1
 end
 
-local lsps = { 'gleam', 'gopls', 'lua_ls', 'pyright', 'rust_analyzer', 'ts_ls', 'zls' }
+local lsps = {
+    'gleam',
+    'gopls',
+    'lua_ls',
+    'pyright',
+    'rust_analyzer',
+    'ts_ls',
+    'zls'
+}
 
 local biome_cli = vim.fn.getcwd() .. "/node_modules/.bin/biome"
 if exe_exists(biome_cli) then
@@ -52,8 +60,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set('n', 'gf', function()
             vim.lsp.buf.format { async = true }
         end, opts)
+        vim.keymap.set('n', 'K', function()
+            vim.lsp.buf.hover { border = 'single' }
+        end, opts)
     end,
 })
 
 vim.keymap.set('n', 'grq', vim.diagnostic.setqflist)
-vim.keymap.set('n', 'gre', vim.diagnostic.open_float)
+vim.keymap.set('n', 'gre', function()
+    vim.diagnostic.open_float { border = 'single' }
+end)
