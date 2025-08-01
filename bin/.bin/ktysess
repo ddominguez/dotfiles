@@ -11,9 +11,21 @@ new_instance() {
 }
 
 launch_new_window() {
-  local selected=$(find ~/projects -mindepth 1 -maxdepth 1 -type d | ~/.fzf/bin/fzf)
-  [[ -z $selected ]] && echo "No project selected." && exit 0
-  local class_name=$(basename "$selected" | tr . _)
+  local working_dir=""
+  local class_name=""
+
+  if [[ "$1" != "" ]]; then
+    working_dir="$1"
+  else
+    working_dir=$(find ~/projects -mindepth 1 -maxdepth 1 -type d | ~/.fzf/bin/fzf)
+    [[ -z $working_dir ]] && echo "No project selected." && exit 0
+  fi
+
+  if [[ "$2" != "" ]]; then
+    class_name="$2"
+  else
+    class_name=$(basename "$working_dir" | tr . _)
+  fi
 
   # TODO: Check if kitty window with selected class_name exists.
   # If it does focus that window.
@@ -23,7 +35,7 @@ launch_new_window() {
     --os-window-class "$class_name" \
     --os-window-title "$class_name" \
     --os-window-state maximized \
-    --cwd "$selected" \
+    --cwd "$working_dir" \
     > /dev/null
 }
 
@@ -43,6 +55,7 @@ switch_window() {
 
 main() {
   local cmd="$1"
+  shift
 
   case "$cmd" in
     switch)
@@ -50,7 +63,28 @@ main() {
       ;;
     new)
       if pgrep -x kitty > /dev/null; then
-        launch_new_window
+        local opt_path=""
+        local opt_name=""
+
+        while [[ $# -gt 0 ]]; do
+          case "$1" in
+            --path)
+              shift; opt_path="$1"; shift
+              ;;
+            --name)
+              shift; opt_name="$1"; shift
+              ;;
+            *)
+              echo "Unknown option: $1"; exit 1
+              ;;
+          esac
+        done
+
+        if [[ "$opt_name" != "" ]] && [[ "$opt_path" == "" ]]; then
+          echo "Error: --name requires --path"; exit 1
+        fi
+
+        launch_new_window "$opt_path" "$opt_name"
       else
         new_instance
       fi
