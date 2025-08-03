@@ -80,7 +80,7 @@ vim.keymap.set("n", "<leader>fb", ":Buffers<cr>")
 vim.g.fzf_preview_window = {}
 vim.g.fzf_layout = {
     window = {
-        width = 0.8,
+        width = 0.9,
         height = 0.5,
         border = "sharp",
     }
