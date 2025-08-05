@@ -43,8 +43,6 @@ Plug 'tpope/vim-commentary'
 Plug 'yegappan/lsp'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
-Plug 'elixir-editors/vim-elixir'
-Plug 'gleam-lang/gleam.vim'
 Plug 'jeffkreeftmeijer/vim-dim'
 call plug#end()
 
@@ -108,25 +106,8 @@ let lspServers = [
 \     args: ['--stdio'],
 \     features: #{documentFormatting: use_tsserver_format},
 \   },
-\ #{
-\     name: 'lexical',
-\     filetype: ['elixir', 'eelixir'],
-\     path: expand("$HOME/.vpm") . '/packages/lexical/_build/dev/package/lexical/bin/start_lexical.sh',
-\     args: [],
-\     syncInit: v:true
-\   },
-\ #{
-\     name: 'gleam',
-\     debug: v:true,
-\     filetype: 'gleam',
-\     path: exepath('gleam'),
-\     args: ['lsp'],
-\     syncInit: v:true,
-\   },
 \ ]
 
-"ruff is my default python formatter
-"Do not use Ruff if black is available
 let venvBlack = executable(expand("$VIRTUAL_ENV/bin/black"))
 if &ft == 'python' && !venvBlack
     let lspServers += [#{
