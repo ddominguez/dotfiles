@@ -1,6 +1,3 @@
--- gitsigns
-require("gitsigns").setup()
-
 -- treesitter
 local nvim_treesitter = require('nvim-treesitter')
 nvim_treesitter.install { 'gleam', 'go', 'python', 'javascript', 'rust', }
