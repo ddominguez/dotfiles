@@ -1,6 +1,6 @@
 -- treesitter
 local nvim_treesitter = require('nvim-treesitter')
-nvim_treesitter.install { 'gleam', 'go', 'python', 'javascript', 'rust', }
+nvim_treesitter.install { 'css', 'go', 'html', 'javascript', 'python', 'typescript', }
 local installed_parsers = nvim_treesitter.get_installed('parsers')
 
 vim.api.nvim_create_augroup('treesitter-setup', { clear = true })
@@ -9,7 +9,15 @@ vim.api.nvim_create_autocmd('FileType', {
     callback = function(args)
         local bufnr = args.buf
         local ft = vim.bo[bufnr].filetype
-        if vim.tbl_contains(installed_parsers, ft) then
+
+        local parser
+        if ft == 'typescriptreact' then
+            parser = 'typescript'
+        else
+            parser = ft
+        end
+
+        if vim.tbl_contains(installed_parsers, parser) then
             vim.treesitter.start()
         end
     end,
