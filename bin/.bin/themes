@@ -39,12 +39,7 @@ ptyxis_select_theme() {
   palettes_dir="$HOME/.local/share/org.gnome.Ptyxis/palettes"
   detect_directory "$palettes_dir"
 
-  installed_themes=("dracula" "Github")
-  selected=$({
-    printf "%s\n" "${installed_themes[@]}"
-    ls "$palettes_dir" | sed 's/.*\///; s/\.palette$//'
-  } | fzf)
-
+  selected=$(ls "$palettes_dir" | sed 's/.*\///; s/\.palette$//' | fzf)
   if [[ -z "$selected" ]]; then
     exit 1
   fi
