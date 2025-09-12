@@ -10,6 +10,15 @@ new_instance() {
     -o allow_remote_control=yes
 }
 
+get_win_id_by_wm_class() {
+  kitty @ ls | jq -r "
+    .[]
+    | select(.wm_class == \"$1\")
+    | .tabs[]
+    | select(.is_active == true)
+    | .windows[0].env.KITTY_WINDOW_ID"
+}
+
 launch_new_window() {
   local working_dir=""
   local class_name=""
@@ -27,10 +36,14 @@ launch_new_window() {
     class_name=$(basename "$working_dir" | tr . _)
   fi
 
-  # TODO: Check if kitty window with selected class_name exists.
-  # If it does focus that window.
+  # Focus window if kitty wm_class exists
+  local win_id=$(get_win_id_by_wm_class "$class_name")
+  if [[ -n "$win_id" ]]; then
+    kitty @ focus-window --match "id:$win_id"
+    return
+  fi
 
-  ~/.local/kitty.app/bin/kitty @ launch \
+  kitty @ launch \
     --type=os-window \
     --os-window-class "$class_name" \
     --os-window-title "$class_name" \
@@ -42,14 +55,10 @@ launch_new_window() {
 switch_window() {
   local selected=$(kitty @ ls | jq -r '.[].wm_class' | ~/.fzf/bin/fzf)
   [[ -z "$selected" ]] && echo "switch window error: window name not selected." && exit 0
-  local win_id=$(kitty @ ls | jq -r "
-    .[] 
-    | select(.wm_class == \"$selected\")
-    | .tabs[] 
-    | select(.is_active == true) 
-    | .windows[0].env.KITTY_WINDOW_ID
-  ")
+
+  local win_id=$(get_win_id_by_wm_class "$selected")
   [[ -z "$win_id" ]] && echo "switch window error: window id not found." && exit 0
+
   kitty @ focus-window --match "id:$win_id"
 }
 
