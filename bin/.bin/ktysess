@@ -7,7 +7,11 @@ new_instance() {
     --title default \
     --listen-on=unix:/tmp/ktysocket \
     --start-as=maximized \
-    -o allow_remote_control=yes
+    -o allow_remote_control=yes \
+    -o tab_bar_style=custom \
+    -o tab_bar_min_tabs=1 \
+    -o tab_title_template="{tab.active_oldest_exe}" \
+    -c ~/.config/kitty/ktysess.conf
 }
 
 get_win_id_by_wm_class() {
