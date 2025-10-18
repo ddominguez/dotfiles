@@ -1,0 +1,148 @@
+#!/bin/bash
+
+PLAIN=false
+[[ "$1" == "--plain" ]] && PLAIN=true
+
+if [[ "$PLAIN" == true ]]; then
+    BOLD=''
+    BLUE=''
+    GREEN=''
+    YELLOW=''
+    RED=''
+    NC=''
+else
+    BOLD='\033[1m'
+    BLUE='\033[0;34m'
+    GREEN='\033[0;32m'
+    YELLOW='\033[0;33m'
+    RED='\033[0;31m'
+    NC='\033[0m' # No Color
+fi
+
+get_network() {
+    # Try nmcli first (NetworkManager)
+    if command -v nmcli &> /dev/null; then
+        local conn=$(nmcli -t -f TYPE,STATE connection show --active 2>/dev/null | grep activated | head -1)
+        if [[ -n "$conn" ]]; then
+            local type=$(echo "$conn" | cut -d: -f1)
+            [[ "$type" == "802-11-wireless" ]] && type="WiFi"
+            [[ "$type" == "802-3-ethernet" ]] && type="Ethernet"
+            echo -e "${GREEN}●${NC} ${type}"
+            return
+        fi
+    fi
+    
+    # Fallback to ip command
+    local has_route=$(ip route | grep default)
+    if [[ -n "$has_route" ]]; then
+        local interface=$(ip route | grep default | awk '{print $5}' | head -1)
+        local type="Unknown"
+        [[ "$interface" =~ ^wl ]] && type="WiFi"
+        [[ "$interface" =~ ^en ]] && type="Ethernet"
+        echo -e "${GREEN}●${NC} ${type}"
+    else
+        echo -e "${RED}●${NC} Disconnected"
+    fi
+}
+
+get_battery() {
+    local bat_path="/sys/class/power_supply/BAT1"
+    if [[ -d "$bat_path" ]]; then
+        local capacity=$(cat "$bat_path/capacity" 2>/dev/null)
+        local status=$(cat "$bat_path/status" 2>/dev/null)
+        
+        local icon="🔋"
+        [[ "$status" == "Charging" ]] && icon="⚡"
+        
+        if [[ -n "$capacity" ]]; then
+            printf "%s %3d%% %s" "$icon" "$capacity" "$status"
+        else
+            echo "N/A"
+        fi
+    else
+        echo "No battery"
+    fi
+}
+
+get_bluetooth() {
+    local devices=$(bluetoothctl devices Connected 2>/dev/null | cut -d' ' -f3- | paste -sd, -)
+    if [[ -n "$devices" ]]; then
+        echo -e "${BLUE}●${NC} ${devices//,/, }"
+    else
+        echo -e "${RED}●${NC} None"
+    fi
+}
+
+get_brightness() {
+    local brightness=$(brightnessctl get 2>/dev/null)
+    local max=$(brightnessctl max 2>/dev/null)
+    
+    if [[ -n "$brightness" && -n "$max" ]]; then
+        local percent=$((brightness * 100 / max))
+        echo "☀️  ${percent}%"
+    else
+        echo "N/A"
+    fi
+}
+
+get_audio_output() {
+    local volume=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ 2>/dev/null | awk '{print $2}')
+    local muted=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ 2>/dev/null | grep -o "MUTED")
+    
+    # Get the default sink device name
+    local sink_id=$(wpctl status 2>/dev/null | grep -A 999 "Audio" | grep -A 999 "Sinks:" | grep "^\s*\*" | awk '{print $2}' | tr -d '.')
+    local sink_name=$(wpctl inspect "$sink_id" 2>/dev/null | grep "node.description" | cut -d'"' -f2)
+    
+    if [[ -n "$volume" ]]; then
+        local percent=$(echo "$volume * 100" | bc | cut -d. -f1)
+        local icon="🔊"
+        [[ -n "$muted" ]] && icon="🔇"
+        
+        # Detect if it's headphones/headset based on name
+        if [[ "$sink_name" =~ [Hh]eadphone|[Hh]eadset|[Bb]luetooth ]]; then
+            icon="🎧"
+            [[ -n "$muted" ]] && icon="🔇"
+        fi
+        
+        if [[ -n "$sink_name" ]]; then
+            printf "%s %3d%% (%s)" "$icon" "$percent" "$sink_name"
+        else
+            printf "%s %3d%%" "$icon" "$percent"
+        fi
+    else
+        echo "N/A"
+    fi
+}
+
+get_microphone() {
+    local volume=$(wpctl get-volume @DEFAULT_AUDIO_SOURCE@ 2>/dev/null | awk '{print $2}')
+    local muted=$(wpctl get-volume @DEFAULT_AUDIO_SOURCE@ 2>/dev/null | grep -o "MUTED")
+    
+    # Get the default source device name
+    local source_id=$(wpctl status 2>/dev/null | grep -A 999 "Audio" | grep -A 999 "Sources:" | grep "^\s*\*" | awk '{print $2}' | tr -d '.')
+    local source_name=$(wpctl inspect "$source_id" 2>/dev/null | grep "node.description" | cut -d'"' -f2)
+    
+    if [[ -n "$volume" ]]; then
+        local percent=$(echo "$volume * 100" | bc | cut -d. -f1)
+        local icon="🎤"
+        [[ -n "$muted" ]] && icon="🔇"
+        
+        if [[ -n "$source_name" ]]; then
+            printf "%s %3d%% (%s)" "$icon" "$percent" "$source_name"
+        else
+            printf "%s %3d%%" "$icon" "$percent"
+        fi
+    else
+        echo "N/A"
+    fi
+}
+
+echo -e "${BOLD}=== System Status ===${NC}"
+echo ""
+echo -e "${BOLD}Network:${NC}     $(get_network)"
+echo -e "${BOLD}Battery:${NC}     $(get_battery)"
+echo -e "${BOLD}Bluetooth:${NC}   $(get_bluetooth)"
+echo -e "${BOLD}Brightness:${NC}  $(get_brightness)"
+echo -e "${BOLD}Audio Out:${NC}   $(get_audio_output)"
+echo -e "${BOLD}Microphone:${NC}  $(get_microphone)"
+echo ""
