@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+selection=$(printf "Lock\nLog out\nSuspend\nReboot\nShutdown" | fuzzel --hide-prompt --dmenu -l 5 -p "Power Menu: ")
+
+[[ -z "$selection" ]] && exit 0
+
+case "$selection" in
+	*"Lock")
+    swaylock -i ~/.config/background --indicator-idle-visible --indicator-radius 150;;
+	*"Log out")
+		niri msg action quit;;
+	*"Suspend")
+		systemctl suspend;;
+	*"Reboot")
+    confirm="$(printf "No\nYes" | fuzzel --dmenu -l 2 -p "Confirm Reboot: ")"
+		[[ "$confirm" == "Yes" ]] && systemctl reboot;;
+	*"Shutdown")
+    confirm="$(printf "No\nYes" | fuzzel --dmenu -l 2 -p "Confirm Shutdown: ")"
+		[[ "$confirm" == "Yes" ]] && systemctl poweroff;;
+esac

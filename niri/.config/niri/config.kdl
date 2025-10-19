@@ -167,7 +167,7 @@ binds {
     Mod+Return hotkey-overlay-title="Open a Terminal" { spawn "~/.local/kitty.app/bin/kitty" "-o" "allow_remote_control=yes"; }
     Mod+D hotkey-overlay-title="Application Launcher" { spawn "fuzzel"; }
     Mod+B hotkey-overlay-title="Open a Browser" { spawn "brave-browser"; }
-    Super+Alt+L hotkey-overlay-title="Lock the Screen" { spawn "swaylock" "-i" "~/.config/background" "--indicator-idle-visible" "--indicator-radius" "150"; }
+    Super+Alt+P hotkey-overlay-title="Spawn Powermenu" { spawn "~/.config/fuzzel/scripts/powermenu"; }
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument. It's passed verbatim to `sh -c`.
