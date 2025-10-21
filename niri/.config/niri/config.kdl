@@ -167,7 +167,7 @@ binds {
     Mod+Return hotkey-overlay-title="Open a Terminal" { spawn "~/.local/kitty.app/bin/kitty" "-o" "allow_remote_control=yes"; }
     Mod+D hotkey-overlay-title="Application Launcher" { spawn "fuzzel"; }
     Mod+B hotkey-overlay-title="Open a Browser" { spawn "brave-browser"; }
-    Super+Alt+P hotkey-overlay-title="Spawn Powermenu" { spawn "~/.config/fuzzel/scripts/powermenu"; }
+    Super+Alt+P hotkey-overlay-title="Spawn Powermenu" { spawn "~/.config/niri/scripts/powermenu"; }
     Super+Alt+W hotkey-overlay-title="Select Window to Focus" { spawn "~/.config/niri/scripts/focus-window"; }
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
