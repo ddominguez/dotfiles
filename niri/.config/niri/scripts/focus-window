@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+windows=$(niri msg -j windows | jq -r '.[] | select(.is_focused == false) | "\(.id)|\(.app_id)|\(.title)"') || exit 1
+[[ -z "$windows" ]] && exit 1
+
+selection=$(echo "$windows" | sort -n | fuzzel --dmenu --minimal-lines -p "Select Window: ")
+[[ -z "$selection" ]] && exit 1
+
+window_id=$(echo "$selection" | cut -d "|" -f1)
+niri msg action focus-window --id "$window_id"
+niri msg action center-column
