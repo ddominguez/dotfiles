@@ -102,9 +102,10 @@ layout {
 // Note that running niri as a session supports xdg-desktop-autostart,
 // which may be more convenient to use.
 // See the binds section below for more spawn examples.
-spawn-at-startup "mako"
+spawn-at-startup "bash" "-c" "swaybg -i ~/.config/background"
 spawn-at-startup "wlsunset" "-l" "40.7" "-L" "-73.7" "-T" "6000"
 spawn-at-startup "gnome-keyring-daemon" "--start" "--components=secrets,ssh"
+spawn-at-startup "mako"
 
 hotkey-overlay {
     skip-at-startup
