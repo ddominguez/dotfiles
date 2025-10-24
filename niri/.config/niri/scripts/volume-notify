@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+volume=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2 * 100)}')
+muted=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -o MUTED)
+
+if [ "$muted" = "MUTED" ]; then
+  icon="audio-volume-muted"
+  message="Muted"
+else
+  if [ "$volume" -ge 70 ]; then
+    icon="audio-volume-high"
+  elif [ "$volume" -ge 30 ]; then
+    icon="audio-volume-medium"
+  else
+    icon="audio-volume-low"
+  fi
+  message="Volume: ${volume}%"
+fi
+
+notify-send -u low -h string:x-canonical-private-synchronous:volume -h int:value:"$volume" "$message" -i "$icon" -t 5500
