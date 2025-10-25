@@ -1,5 +1,5 @@
+.config/nvim/plugin/
 kitty/.config/kitty/theme.conf
-neovim/.config/nvim/plugin/
 vim/.vim/autoload/
 vim/.vim/plugged/
 vim/.vim/.netrwhist
