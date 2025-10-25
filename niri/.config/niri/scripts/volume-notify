@@ -17,4 +17,4 @@ else
   message="Volume: ${volume}%"
 fi
 
-notify-send -u low -h string:x-canonical-private-synchronous:volume -h int:value:"$volume" "$message" -i "$icon" -t 5500
+notify-send -u low -h string:x-canonical-private-synchronous:volume -h int:value:"$volume" "$message" -i "$icon"
