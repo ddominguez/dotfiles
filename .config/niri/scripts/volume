@@ -1,0 +1,130 @@
+#!/usr/bin/env bash
+
+AUDIO_SINK="@DEFAULT_AUDIO_SINK@"
+AUDIO_SOURCE="@DEFAULT_AUDIO_SOURCE@"
+
+get_volume() {
+  wpctl get-volume "$1" | awk '{print int($2 * 100)}'
+}
+
+is_muted() {
+  wpctl get-volume "$1" | grep -q -o MUTED
+}
+
+volume_up() {
+  wpctl set-volume "$1" 0.05+ --limit 1.0
+}
+
+volume_down() {
+  wpctl set-volume "$1" 0.05-
+}
+
+toggle_mute() {
+  wpctl set-mute "$1" toggle
+}
+
+get_notification_id() {
+  if [[ "$1" == "$AUDIO_SOURCE" ]]; then
+    echo "microphone"
+  else
+    echo "volume"
+  fi
+}
+
+get_muted_icon() {
+  if [[ "$1" == "$AUDIO_SOURCE" ]]; then
+    echo "microphone-sensitivity-muted"
+  else
+    echo "audio-volume-muted"
+  fi
+}
+
+get_volume_icon() {
+  local target_id="$1"
+  local volume="$2"
+  local prefix="audio-volume"
+
+  if [[ "$1" == "$AUDIO_SOURCE" ]]; then
+    prefix="microphone-sensitivity"
+  fi
+
+  if [ "$volume" -ge 70 ]; then
+    echo "${prefix}-high"
+  elif [ "$volume" -ge 30 ]; then
+    echo "${prefix}-medium"
+  else
+    echo "${prefix}-low"
+  fi
+}
+
+send_notification() {
+  local target_id="$1"
+  local volume=$(get_volume "$target_id")
+  local notification_id=$(get_notification_id "$target_id")
+
+  if is_muted "$target_id"; then
+    icon=$(get_muted_icon "$target_id")
+    message="${notification_id^} Muted"
+  else
+    icon=$(get_volume_icon "$target_id" "$volume")
+    message="${notification_id^}: ${volume}%"
+  fi
+
+  notify-send -u low \
+    -h string:x-canonical-private-synchronous:"$notification_id" \
+    -h int:value:"$volume" "$message" \
+    -i "$icon"
+}
+
+show_help() {
+  cat << EOF
+Usage: $(basename "$0") COMMAND
+
+Audio Controls:
+  up    Increase sink volume by 5%
+  down  Decrease sink volume by 5%
+  mute  Toggle sink mute
+
+Microphone Controls:
+  mic-up    Increase source volume by 5%
+  mic-down  Decrease source volume by 5%
+  mic-mute  Toggle source mute
+EOF
+}
+
+main() {
+  local cmd="$1"
+
+  case "$cmd" in
+    up)
+      volume_up "$AUDIO_SINK"
+      send_notification "$AUDIO_SINK"
+      ;;
+    down)
+      volume_down "$AUDIO_SINK"
+      send_notification "$AUDIO_SINK"
+      ;;
+    mute)
+      toggle_mute "$AUDIO_SINK"
+      send_notification "$AUDIO_SINK"
+      ;;
+    mic-up)
+      volume_up "$AUDIO_SOURCE"
+      send_notification "$AUDIO_SOURCE"
+      ;;
+    mic-down)
+      volume_down "$AUDIO_SOURCE"
+      send_notification "$AUDIO_SOURCE"
+      ;;
+    mic-mute)
+      toggle_mute "$AUDIO_SOURCE"
+      send_notification "$AUDIO_SOURCE"
+      ;;
+    *)
+      show_help
+      exit 1
+      ;;
+  esac
+}
+
+main "$@"
