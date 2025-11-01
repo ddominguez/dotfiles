@@ -12,7 +12,7 @@ FZF_PREVIEW='~/.local/kitty.app/bin/kitten icat \
   {}'
 
 ~/.local/kitty.app/bin/kitty \
-  --class kittymenu-switch-allpaper \
+  --class kittymenu-switch-wallpaper \
   -o initial_window_width=960 \
   -o initial_window_height=230 \
   bash -c "
