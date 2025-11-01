@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+BACKGROUND_IMAGE="$HOME/.config/background"
+WALLPAPER_DIR="$HOME/Pictures/Wallpapers"
+TMP_FILE="/tmp/fzf_wallpaper_selection_$$"
+
+FZF_PREVIEW='~/.local/kitty.app/bin/kitten icat \
+  --clear \
+  --transfer-mode=memory \
+  --stdin=no \
+  --place=${FZF_PREVIEW_COLUMNS}x${FZF_PREVIEW_LINES}@0x0 \
+  {}'
+
+~/.local/kitty.app/bin/kitty \
+  --class kittymenu-switch-allpaper \
+  -o initial_window_width=960 \
+  -o initial_window_height=230 \
+  bash -c "
+cd ${WALLPAPER_DIR}
+command ls | ~/.fzf/bin/fzf \
+  --no-bold \
+  --no-input \
+  --layout=reverse \
+  --header='Select background' \
+  --color=bg+:0,fg+:12,hl+:3,border:12,gutter:-1,info:5,marker:12,pointer:1,prompt:12 \
+  --preview-window='right,45%,border-left' \
+  --preview='${FZF_PREVIEW}' > ${TMP_FILE}
+"
+
+SELECTION=$(cat "${TMP_FILE}" 2>/dev/null)
+rm -f "${TMP_FILE}"
+
+[[ -z $SELECTION ]] && echo "no selection." && exit 1
+
+if [[ -f "$BACKGROUND_IMAGE" ]] && cmp -s "${WALLPAPER_DIR}/${SELECTION}" "$BACKGROUND_IMAGE"; then
+  echo "selected wallpaper is already the current background."
+  exit 0
+fi
+
+cp "${WALLPAPER_DIR}/${SELECTION}" "$BACKGROUND_IMAGE"
+niri msg action do-screen-transition
+pkill swaybg
+swaybg -i "$BACKGROUND_IMAGE" -m fill >/dev/null 2>&1 &

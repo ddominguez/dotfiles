@@ -102,7 +102,7 @@ layout {
 // Note that running niri as a session supports xdg-desktop-autostart,
 // which may be more convenient to use.
 // See the binds section below for more spawn examples.
-spawn-at-startup "bash" "-c" "swaybg -i ~/.config/background"
+spawn-at-startup "bash" "-c" "swaybg -i ~/.config/background -m fill"
 spawn-at-startup "wlsunset" "-l" "40.7" "-L" "-73.7" "-T" "6000"
 spawn-at-startup "gnome-keyring-daemon" "--start" "--components=secrets,ssh"
 spawn-at-startup "mako"
@@ -147,6 +147,10 @@ window-rule {
   match app-id="kitty"
   default-column-width { fixed 1050; }
 }
+window-rule {
+  match app-id="^kittymenu"
+  open-floating true
+}
 
 binds {
     // Mod-Shift-/, which is usually the same as Mod-?,
@@ -158,6 +162,7 @@ binds {
     Mod+B hotkey-overlay-title="Open a Browser" { spawn "brave-browser"; }
     Super+Alt+P hotkey-overlay-title="Spawn Powermenu" { spawn "~/.config/niri/scripts/powermenu"; }
     Super+Alt+W hotkey-overlay-title="Select Window to Focus" { spawn "~/.config/niri/scripts/focus-window"; }
+    Super+Space hotkey-overlay-title="Select Wallpaper" { spawn "~/.config/niri/scripts/switch-wallpaper"; }
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument. It's passed verbatim to `sh -c`.
