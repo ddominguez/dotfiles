@@ -17,7 +17,7 @@ FZF_BACKGROUND_PICKER="command ls | ~/.fzf/bin/fzf \
   --no-input \
   --layout=reverse \
   --header='Select background' \
-  --color=bg+:0,fg+:12,hl+:3,border:12,gutter:-1,info:5,marker:12,pointer:1,prompt:12 \
+  --color=bg+:0,fg+:12,hl+:3,border:12,gutter:-1,info:5,marker:12,pointer:1,prompt:12,header:3:bold \
   --preview-window='right,45%,border-left' \
   --preview='${KITTEN_ICAT}'"
 
@@ -26,8 +26,9 @@ select_background() {
     --class "$KITTY_CLASS" \
     -T "$KITTY_CLASS" \
     -d "$WALLPAPER_DIR" \
-    -o initial_window_width=960 \
-    -o initial_window_height=230 \
+    -o initial_window_width=970 \
+    -o initial_window_height=240 \
+    -o font_size=20 \
     bash -c "${FZF_BACKGROUND_PICKER} > ${TMP_FILE}"
 }
 
