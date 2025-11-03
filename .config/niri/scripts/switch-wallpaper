@@ -47,38 +47,46 @@ apply_selected_background() {
   swaybg -i "$BACKGROUND_IMAGE" -m fill >/dev/null 2>&1 &
 }
 
-get_current_workspace_info() {
-  info=$(niri msg -j workspaces | jq -r '.[] | select(.is_focused == true and .is_active == true) | "\(.id)|\(.idx)"') || exit 1
-  [[ -z "$info" ]] && exit 1
-  echo "$info"
+get_current_workspace() {
+  niri msg -j workspaces | jq -r '.[] | select(.is_focused == true and .is_active == true)'
 }
 
-find_existing_window_info() {
-  info=$(niri msg -j windows | jq --arg app_id "$KITTY_CLASS" -r '.[] | select(.app_id == $app_id) | "\(.id)|\(.workspace_id)"')
-  [[ -z "$info" ]] && echo ""
-  echo "$info"
+find_existing_window() {
+  niri msg -j windows | jq --arg app_id "$KITTY_CLASS" -r '.[] | select(.app_id == $app_id)'
+}
+
+find_workspace_by_id() {
+  niri msg -j workspaces | jq --arg id "$1" -r '.[] | select(.id == ($id|tonumber))'
 }
 
 handle_existing_app() {
-  current_workspace_info=$(get_current_workspace_info)
-  current_workspace_id=$(echo "$current_workspace_info" | cut -d "|" -f1)
-  current_workspace_idx=$(echo "$current_workspace_info" | cut -d "|" -f2)
-  existing_window_info=$(find_existing_window_info)
-  if [[ "$existing_window_info" != "" ]]; then
-    existing_window_id=$(echo "$existing_window_info" | cut -d "|" -f1)
-    existing_workspace_id=$(echo "$existing_window_info" | cut -d "|" -f2)
-    if [[ "$current_workspace_id" == "$existing_workspace_id" ]]; then
-      exit 0
-    else
-      niri msg action move-window-to-workspace \
-        --focus true \
-        --window-id "$existing_window_id" \
-        "$current_workspace_idx"
+  current_workspace=$(get_current_workspace)
+  [[ -z "$current_workspace" ]] && return 1
+  current_workspace_id=$(echo "$current_workspace" | jq -r '.id')
+  current_workspace_idx=$(echo "$current_workspace" | jq -r '.idx')
+  current_workspace_output=$(echo "$current_workspace" | jq -r '.output')
 
-      niri msg action focus-window --id "$existing_window_id"
-      exit 0
-    fi
+  existing_window=$(find_existing_window)
+  [[ -z "$existing_window" ]] && return 1
+  existing_window_id=$(echo "$existing_window" | jq -r '.id')
+  existing_workspace_id=$(echo "$existing_window" | jq -r '.workspace_id')
+  existing_workspace_output=$(echo $(find_workspace_by_id "$existing_workspace_id") | jq -r '.output')
+
+  if [[ "$current_workspace_output" != "$existing_workspace_output" ]]; then
+    niri msg action move-window-to-monitor \
+      --id "$existing_window_id" \
+      "$current_workspace_output"
   fi
+
+  if [[ "$current_workspace_id" != "$existing_workspace_id" ]]; then
+    niri msg action move-window-to-workspace \
+      --focus true \
+      --window-id "$existing_window_id" \
+      "$current_workspace_idx"
+  fi
+
+  niri msg action focus-window --id "$existing_window_id"
+  exit 0
 }
 
 main() {
