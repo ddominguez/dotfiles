@@ -26,8 +26,10 @@ select_background() {
     --class "$KITTY_CLASS" \
     -T "$KITTY_CLASS" \
     -d "$WALLPAPER_DIR" \
+    -o clear_all_shortcuts=yes \
     -o initial_window_width=970 \
     -o initial_window_height=240 \
+    -o background=#111111 \
     -o font_size=20 \
     bash -c "${FZF_BACKGROUND_PICKER} > ${TMP_FILE}"
 }
