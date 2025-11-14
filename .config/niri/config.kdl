@@ -71,8 +71,8 @@ output "DP-1" {
 // https://yalter.github.io/niri/Configuration:-Layout
 layout {
     background-color "#222222"
-    gaps 15
-    center-focused-column "never"
+    gaps 12
+    center-focused-column "on-overflow"
     always-center-single-column
     preset-column-widths {
         proportion 0.33333
