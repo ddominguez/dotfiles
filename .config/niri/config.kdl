@@ -103,7 +103,7 @@ layout {
 // which may be more convenient to use.
 // See the binds section below for more spawn examples.
 spawn-at-startup "bash" "-c" "swaybg -i ~/.config/background -m fill"
-spawn-at-startup "wlsunset" "-l" "40.7" "-L" "-73.7" "-T" "6000"
+spawn-at-startup "bash" "-c" "~/.config/niri/scripts/wlsunset"
 spawn-at-startup "gnome-keyring-daemon" "--start" "--components=secrets,ssh"
 spawn-at-startup "mako"
 

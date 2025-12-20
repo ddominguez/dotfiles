@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+content=$(curl -s http://ip-api.com/json/)
+longitude=$(echo "$content" | jq .lon)
+latitude=$(echo "$content" | jq .lat)
+wlsunset -l "$latitude" -L "$longitude" -T 6000 &
+
