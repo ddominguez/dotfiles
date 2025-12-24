@@ -55,12 +55,20 @@ environment {
 // Remember to uncomment the node by removing "/-"!
 output "eDP-1" {
     mode "2256x1504"
-    scale 1.50
+    scale 1.33
     transform "normal"
+
+    layout {
+      default-column-width { proportion 0.90; }
+      preset-column-widths {
+          proportion 0.5
+          proportion 0.75
+          proportion 0.90
+      }
+    }
 }
 
 output "DP-1" {
-    // focus-at-startup
     mode "1920x1080"
     scale 1
     transform "normal"
@@ -74,14 +82,11 @@ layout {
     gaps 12
     center-focused-column "on-overflow"
     always-center-single-column
+    default-column-width { proportion 0.75; }
     preset-column-widths {
-        proportion 0.33333
         proportion 0.5
-        proportion 0.66667
+        proportion 0.75
     }
-
-    // You can change the default width of the new windows.
-    default-column-width { proportion 0.5; }
 
     focus-ring {
         off
@@ -136,16 +141,6 @@ animations {
 window-rule {
     geometry-corner-radius 0
     clip-to-geometry true
-}
-window-rule {
-  match app-id="brave-browser"
-  match app-id="chromium-browser"
-  match app-id="org.mozilla.firefox"
-  default-column-width { fixed 1200; }
-}
-window-rule {
-  match app-id="kitty"
-  default-column-width { fixed 1050; }
 }
 window-rule {
   match app-id="^kittymenu"
