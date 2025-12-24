@@ -38,6 +38,13 @@ if exe_exists(vim.fn.expand("$VIRTUAL_ENV/bin/pyrefly")) then
     table.insert(lsps, 'pyrefly')
 end
 
+if exe_exists(vim.fn.expand("$VIRTUAL_ENV/bin/ty")) then
+    lsps = vim.tbl_filter(function(lsp)
+        return lsp ~= 'pyright'
+    end, lsps)
+    table.insert(lsps, 'ty')
+end
+
 vim.lsp.enable(lsps)
 
 vim.api.nvim_create_autocmd('LspAttach', {
