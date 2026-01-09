@@ -17,7 +17,8 @@ FZF_BACKGROUND_PICKER="command ls | ~/.fzf/bin/fzf \
   --no-input \
   --layout=reverse \
   --header='Select background' \
-  --color=bg+:0,fg+:12,hl+:3,border:12,gutter:-1,info:5,marker:12,pointer:1,prompt:12,header:3:bold \
+  --color=bg+:0,fg+:12,hl+:3,border:12,info:5,marker:12,pointer:1,prompt:12,header:3:bold \
+  --gutter=' ' \
   --preview-window='right,45%,border-left' \
   --preview='${KITTEN_ICAT}'"
 
