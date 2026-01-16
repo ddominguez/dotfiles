@@ -55,7 +55,7 @@ environment {
 // Remember to uncomment the node by removing "/-"!
 output "eDP-1" {
     mode "2256x1504"
-    scale 1.33
+    scale 1.50
     transform "normal"
 
     layout {
@@ -79,7 +79,7 @@ output "DP-1" {
 // https://yalter.github.io/niri/Configuration:-Layout
 layout {
     background-color "#222222"
-    gaps 12
+    gaps 8
     center-focused-column "on-overflow"
     always-center-single-column
     default-column-width { proportion 0.75; }
