@@ -38,6 +38,7 @@ end)
 
 set.termguicolors = false
 vim.cmd("colorscheme default")
+vim.api.nvim_set_hl(0, "Normal", { ctermfg = 7 })
 vim.api.nvim_set_hl(0, "Comment", { ctermfg = 8 })
 vim.api.nvim_set_hl(0, "SignColumn", {})
 vim.api.nvim_set_hl(0, "MatchParen", {})
