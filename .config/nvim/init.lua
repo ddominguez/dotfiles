@@ -24,17 +24,12 @@ if vim.fn.isdirectory(vim.fn.expand("$HOME/.vpm/bin")) ~= 0 then
     vim.env.PATH = vim.env.PATH .. ":" .. vim.fn.expand("$HOME/.vpm/bin")
 end
 
-require("packer").startup(function(use)
-    use("wbthomason/packer.nvim")
-    use("lewis6991/gitsigns.nvim")
-    use("junegunn/fzf")
-    use("junegunn/fzf.vim")
-    use {
-        "nvim-treesitter/nvim-treesitter",
-        branch = "main",
-        run = ":TSUpdate"
-    }
-end)
+vim.pack.add({
+    "https://github.com/lewis6991/gitsigns.nvim",
+    "https://github.com/junegunn/fzf",
+    "https://github.com/junegunn/fzf.vim",
+    { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
+})
 
 set.termguicolors = false
 vim.cmd("colorscheme default")
