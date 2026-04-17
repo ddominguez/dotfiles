@@ -46,18 +46,22 @@ Plug 'junegunn/fzf.vim'
 Plug 'jeffkreeftmeijer/vim-dim'
 call plug#end()
 
-colorscheme grim
+"undercurls
+let &t_Cs = "\e[4:3m"
+let &t_Ce = "\e[4:0m"
+
+colorscheme dim
 set background=dark
 hi clear SignColumn
 hi clear MatchParen
-hi Constant ctermfg=6
 hi ErrorMsg ctermbg=None ctermfg=1
-hi Identifier cterm=None
+hi LspDiagSignWarningText ctermbg=None ctermfg=11
 hi Pmenu ctermbg=0
-hi PreProc cterm=None
-hi SpellBad cterm=underline ctermbg=None
-hi SpellLocal cterm=underline ctermbg=None
-hi Statement cterm=None ctermfg=5
+hi PmenuSel ctermfg=0
+hi SpellBad cterm=undercurl ctermbg=None
+hi SpellLocal cterm=undercurl ctermbg=None
+hi SpellCap term=None ctermfg=8 ctermbg=None
+hi ColorColumn ctermbg=0
 
 "autocomplete
 set completeopt=menuone
@@ -86,9 +90,9 @@ let lspServers = [
 \     syncInit: v:true
 \   },
 \ #{
-\     name: 'pyright',
+\     name: 'basedpyright',
 \     filetype: 'python',
-\     path: exepath('pyright-langserver'),
+\     path: exepath('basedpyright-langserver'),
 \     args: ['--stdio'],
 \     workspaceConfig: #{python: #{pythonPath: exepath('python')}},
 \   },
