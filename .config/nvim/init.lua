@@ -24,6 +24,8 @@ if vim.fn.isdirectory(vim.fn.expand("$HOME/.vpm/bin")) ~= 0 then
     vim.env.PATH = vim.env.PATH .. ":" .. vim.fn.expand("$HOME/.vpm/bin")
 end
 
+require('vim._core.ui2').enable()
+
 vim.pack.add({
     "https://github.com/lewis6991/gitsigns.nvim",
     "https://github.com/junegunn/fzf",

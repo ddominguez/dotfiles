@@ -1,7 +1,7 @@
 {
   "plugins": {
     "fzf": {
-      "rev": "06e70570e2088605d61f18b127356e5680f7f599",
+      "rev": "27dab2422e5faa6149b302d941280fcb8f9fe74c",
       "src": "https://github.com/junegunn/fzf"
     },
     "fzf.vim": {
@@ -9,7 +9,7 @@
       "src": "https://github.com/junegunn/fzf.vim"
     },
     "gitsigns.nvim": {
-      "rev": "8d82c240f190fc33723d48c308ccc1ed8baad69d",
+      "rev": "6d808f99bd63303646794406e270bd553ad7792e",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
     "nvim-treesitter": {
