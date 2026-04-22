@@ -33,33 +33,6 @@ vim.pack.add({
     { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
 })
 
-set.termguicolors = false
-vim.cmd("colorscheme default")
-vim.api.nvim_set_hl(0, "Normal", { ctermfg = 7 })
-vim.api.nvim_set_hl(0, "Comment", { ctermfg = 8 })
-vim.api.nvim_set_hl(0, "SignColumn", {})
-vim.api.nvim_set_hl(0, "MatchParen", {})
-vim.api.nvim_set_hl(0, "NormalFloat", {})
-vim.api.nvim_set_hl(0, "FloatBorder", { ctermfg = 12 })
-vim.api.nvim_set_hl(0, "Pmenu", { ctermbg = 0 })
-vim.api.nvim_set_hl(0, "PmenuThumb", { ctermbg = 12 })
-vim.api.nvim_set_hl(0, "Statement", { ctermfg = 5, bold = false })
-vim.api.nvim_set_hl(0, "PreProc", { bold = false })
-vim.api.nvim_set_hl(0, "Conceal", { ctermfg = 7 })
-vim.api.nvim_set_hl(0, "ColorColumn", { ctermbg = 0 })
-vim.api.nvim_set_hl(0, "LspReferenceTarget", {})
-vim.api.nvim_set_hl(0, "StatusLineNC", { cterm = { underline = true } })
-
--- when do we see the Ok level??
--- and should it also have the undercurl??
-local DiagnosticLevels = { "Error", "Warn", "Info", "Hint" }
-for _, level in pairs(DiagnosticLevels) do
-    vim.api.nvim_set_hl(0, "DiagnosticUnderline" .. level, vim.tbl_extend("force",
-        vim.api.nvim_get_hl(0, { name = "DiagnosticUnderline" .. level }),
-        { cterm = { undercurl = true }, undercurl = true }
-    ))
-end
-
 -- go templ ft
 vim.filetype.add({
     extension = {
@@ -92,5 +65,6 @@ vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_node_provider = 0
 
+require "theme"
 require "lsp"
 require "plugins"
