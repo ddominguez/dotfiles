@@ -31,12 +31,13 @@ end
 
 if is_light then
     vim.api.nvim_set_hl(0, "Normal", { ctermfg = 0 })
-    vim.api.nvim_set_hl(0, "Comment", { ctermfg = 7 })
+    vim.api.nvim_set_hl(0, "Comment", { ctermfg = 15 })
     vim.api.nvim_set_hl(0, "FloatBorder", { ctermfg = 12 })
     vim.api.nvim_set_hl(0, "PmenuThumb", { ctermbg = 12 })
     vim.api.nvim_set_hl(0, "Statement", { ctermfg = 5, bold = true })
-    vim.api.nvim_set_hl(0, "ColorColumn", { ctermbg = 7 })
+    vim.api.nvim_set_hl(0, "ColorColumn", { ctermbg = 103 })
     vim.api.nvim_set_hl(0, "String", { ctermfg = 4 })
+    vim.api.nvim_set_hl(0, "Function", { ctermfg = 8 })
     vim.api.nvim_set_hl(0, "Search", { ctermfg = 0, ctermbg = 10 })
     vim.api.nvim_set_hl(0, "CurSearch", { ctermfg = 0, ctermbg = 10 })
     vim.api.nvim_set_hl(0, "Error", { ctermfg = 1, bold = true })
