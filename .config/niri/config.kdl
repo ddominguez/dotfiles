@@ -79,7 +79,7 @@ output "Samsung Electric Company SMB2330H 0x5A314D58" {
 // https://yalter.github.io/niri/Configuration:-Layout
 layout {
     background-color "#222222"
-    gaps 8
+    gaps 5
     center-focused-column "on-overflow"
     always-center-single-column
     default-column-width { proportion 0.75; }
