@@ -32,7 +32,7 @@ kitty_select_theme() {
   fi
 
   ln -sf "$themes_dir/$selected" "$config_dir/theme.conf"
-  kitten @ load-config
+  kitten @ set-colors --all --configured "$config_dir/theme.conf"
 }
 
 ptyxis_select_theme() {
