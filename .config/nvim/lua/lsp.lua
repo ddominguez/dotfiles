@@ -14,7 +14,6 @@ local lsps = {
     'gleam',
     'gopls',
     'lua_ls',
-    'pyright',
     'rust_analyzer',
     'ts_ls',
     'zls'
@@ -32,17 +31,11 @@ if not exe_exists(vim.fn.expand("$VIRTUAL_ENV/bin/black")) then
 end
 
 if exe_exists(vim.fn.expand("$VIRTUAL_ENV/bin/pyrefly")) then
-    lsps = vim.tbl_filter(function(lsp)
-        return lsp ~= 'pyright'
-    end, lsps)
     table.insert(lsps, 'pyrefly')
-end
-
-if exe_exists(vim.fn.expand("$VIRTUAL_ENV/bin/ty")) then
-    lsps = vim.tbl_filter(function(lsp)
-        return lsp ~= 'pyright'
-    end, lsps)
+elseif exe_exists(vim.fn.expand("$VIRTUAL_ENV/bin/ty")) then
     table.insert(lsps, 'ty')
+else
+    table.insert(lsps, 'basedpyright')
 end
 
 vim.lsp.enable(lsps)

@@ -44,6 +44,7 @@ vim.filetype.add({
 vim.keymap.set("n", "bd", ":bd<cr>", { silent = true })
 vim.keymap.set("n", "bn", ":bn<cr>", { silent = true })
 vim.keymap.set("n", "bp", ":bp<cr>", { silent = true })
+vim.keymap.set("t", "<C-e>", [[<C-\><C-n>]])
 
 -- fzf mappings
 vim.keymap.set("n", "<leader>ff", ":Files<cr>")
