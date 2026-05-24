@@ -13,12 +13,36 @@ set.cmdheight = 1
 set.colorcolumn = "80"
 set.signcolumn = "yes"
 set.mouse = ""
-set.laststatus = 1
+set.laststatus = 2
 set.swapfile = false
+set.splitbelow = true
+set.splitright = true
 vim.g.mapleader = " "
 
 set.completeopt = "menuone,noselect"
 set.shortmess:append("c")
+
+local last_file = ""
+vim.api.nvim_create_autocmd({ "BufEnter", "TermOpen", "FileType" }, {
+    callback = function()
+        vim.opt.title = true
+        if vim.bo.buftype == "" then
+            last_file = vim.fn.expand("%:.")
+        end
+
+        local is_fzf_win = vim.bo.filetype == "fzf"
+        local is_hover_win = vim.bo.buftype == "nofile" and vim.bo.filetype == "markdown"
+        local is_pager_win = vim.bo.buftype == "nofile" and vim.bo.filetype == "pager"
+
+        if is_fzf_win or is_hover_win or is_pager_win then
+            vim.opt.titlestring = "nvim " .. last_file
+        elseif vim.bo.buftype == "terminal" then
+            vim.opt.titlestring = "nvim  terminal"
+        else
+            vim.opt.titlestring = "nvim %f%( %m%)"
+        end
+    end,
+})
 
 if vim.fn.isdirectory(vim.fn.expand("$HOME/.vpm/bin")) ~= 0 then
     vim.env.PATH = vim.env.PATH .. ":" .. vim.fn.expand("$HOME/.vpm/bin")
