@@ -22,10 +22,10 @@ vim.g.mapleader = " "
 set.completeopt = "menuone,noselect"
 set.shortmess:append("c")
 
+vim.opt.title = true
 local last_file = ""
 vim.api.nvim_create_autocmd({ "BufEnter", "TermOpen", "FileType" }, {
     callback = function()
-        vim.opt.title = true
         if vim.bo.buftype == "" then
             last_file = vim.fn.expand("%:.")
         end
