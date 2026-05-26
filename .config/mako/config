@@ -1,5 +1,8 @@
-font=monospace 16
+font=monospace 14
 default-timeout=5000
 icons=1
 icon-path=/usr/share/icons/AdwaitaLegacy
 max-icon-size=64
+width=350
+height=250
+layer=overlay
