@@ -87,6 +87,9 @@ let lspOpts = #{
 \   hoverInPreview: v:false,
 \   condensedCompletionMenu: v:true,
 \   noNewlineInCompletion: v:true,
+\   popupBorder: v:true,
+\   popupHighlight: 'Normal',
+\   popupBorderHighlight: 'Normal',
 \ }
 
 let lspServers = [
@@ -154,7 +157,7 @@ function! LspKeyMaps()
     nmap <buffer> <silent> gf :LspFormat<CR>
     nmap <buffer> <silent> grr :LspShowReferences<CR>
     nmap <buffer> <silent> grn :LspRename<CR>
-    nmap <buffer> <silent> graa :LspCodeAction<CR>
+    nmap <buffer> <silent> gra :LspCodeAction<CR>
 endfunction
 
 nmap bn :bn<CR>
