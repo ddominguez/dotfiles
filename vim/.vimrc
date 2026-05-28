@@ -24,14 +24,16 @@ set signcolumn=yes
 set nobackup
 set noswapfile
 set nowritebackup
-set ttyfast
+set laststatus=2
+set splitbelow
+set splitright
 
 let vpm_bin = "$HOME/.vpm/bin"
 if (isdirectory(expand(vpm_bin)))
     let $PATH .= ':' . expand(vpm_bin)
 endif
 
-"Plugins
+" Plugins
 let data_dir = '~/.vim'
 if empty(glob(data_dir . '/autoload/plug.vim'))
   silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
@@ -46,9 +48,13 @@ Plug 'junegunn/fzf.vim'
 Plug 'jeffkreeftmeijer/vim-dim'
 call plug#end()
 
-"undercurls
+" undercurls
 let &t_Cs = "\e[4:3m"
 let &t_Ce = "\e[4:0m"
+
+" cursor
+let &t_SI = "\e[6 q"
+let &t_EI = "\e[2 q"
 
 colorscheme dim
 set background=dark
@@ -61,9 +67,11 @@ hi PmenuSel ctermfg=0
 hi SpellBad cterm=undercurl ctermbg=None
 hi SpellLocal cterm=undercurl ctermbg=None
 hi SpellCap term=None ctermfg=8 ctermbg=None
-hi ColorColumn ctermbg=0
+hi ColorColumn ctermbg=0 ctermfg=None
+hi StatusLine term=None ctermbg=0 ctermfg=7
+hi StatusLineNC term=None ctermbg=0 ctermfg=8
 
-"autocomplete
+" autocomplete
 set completeopt=menuone
 set shortmess+=c
 
@@ -141,12 +149,12 @@ au User LspAttached call LspKeyMaps()
 function! LspKeyMaps()
     nmap <buffer> <silent> K :LspHover<CR>
     nmap <buffer> <silent> gd :LspGotoDefinition<CR>
-    nmap <buffer> <silent> <leader>e :LspDiagCurrent<CR>
-    nmap <buffer> <silent> <leader>q :LspDiagShow<CR>
-    nmap <buffer> <silent> <leader>f :LspFormat<CR>
-    nmap <buffer> <silent> <leader>gr :LspShowReferences<CR>
-    nmap <buffer> <silent> <leader>rn :LspRename<CR>
-    nmap <buffer> <silent> <leader>ca :LspCodeAction<CR>
+    nmap <buffer> <silent> gre :LspDiagCurrent<CR>
+    nmap <buffer> <silent> grq :LspDiagShow<CR>
+    nmap <buffer> <silent> gf :LspFormat<CR>
+    nmap <buffer> <silent> grr :LspShowReferences<CR>
+    nmap <buffer> <silent> grn :LspRename<CR>
+    nmap <buffer> <silent> graa :LspCodeAction<CR>
 endfunction
 
 nmap bn :bn<CR>
@@ -163,12 +171,13 @@ let g:fzf_layout = #{
 \        border: 'sharp',
 \    }
 \}
-"this is needed if I want fzf.vim to use the
-"colors settings from FZF_DEFAUL_OPTS
+
+" this is needed if I want fzf.vim to use the
+" colors settings from FZF_DEFAUL_OPTS
 let g:fzf_colors = #{fg: ["fg", "Normal"]}
 
-if executable('xclip')
-    vmap <C-c> :!xclip -f -selection clipboard<CR>
+if executable('wl-copy')
+    vmap <C-c> :silent w !wl-copy<CR>
 endif
 
 au FileType python nmap <buffer> <leader>x :!clear;python %<CR>
@@ -176,6 +185,31 @@ au FileType go nmap <buffer> <leader>x :!clear;go run %<CR>
 au FileType help,qf,lspgfm nmap <buffer> q :q<CR>
 au FileType qf,lspgfm setlocal wrap linebreak colorcolumn= signcolumn=
 
-"filetypes with 2 space tabs
+" filetypes with 2 space tabs
 au FileType css,html,htmldjango,javascript,json,typescript,typescriptreact
             \ setlocal shiftwidth=2 tabstop=2 softtabstop=2
+
+" set title of the window
+set title
+let s:last_file = ""
+
+augroup TitleString
+    autocmd!
+    autocmd BufEnter,TerminalOpen,FileType * call s:UpdateTitle()
+augroup END
+
+function! s:UpdateTitle()
+    if &buftype == ""
+        let s:last_file = expand("%:.")
+    endif
+
+    let l:is_fzf_win = &filetype == "fzf"
+
+    if l:is_fzf_win
+        let &titlestring = "vim " .. s:last_file
+    elseif &buftype == "terminal"
+        let &titlestring = "vim  terminal"
+    else
+        let &titlestring = "vim %f%( %m%)"
+    endif
+endfunction
