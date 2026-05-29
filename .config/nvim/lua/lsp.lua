@@ -14,6 +14,7 @@ local lsps = {
     'gleam',
     'gopls',
     'lua_ls',
+    'phpactor',
     'rust_analyzer',
     'ts_ls',
     'zls'
