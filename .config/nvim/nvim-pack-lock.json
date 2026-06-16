@@ -1,11 +1,11 @@
 {
   "plugins": {
     "fzf": {
-      "rev": "f5fbfd848ec0a5c9771dd103e921e7064445c9ba",
+      "rev": "3c9965a61a842ef54e976c7195b985ee43a3e776",
       "src": "https://github.com/junegunn/fzf"
     },
     "fzf.vim": {
-      "rev": "356608e2ae5d9127e2c964885ea2b21ea7aea9ab",
+      "rev": "d2a59a992a2455f609c0fde2ebd84427ea8f919a",
       "src": "https://github.com/junegunn/fzf.vim"
     },
     "gitsigns.nvim": {
