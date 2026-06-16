@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+external=$(niri msg -j outputs | jq -r 'keys[] | select(. != "eDP-1")')
+
+[[ -z "$external" ]] && echo "No external display detected." && exit 1
+
+external_width=$(niri msg -j outputs | jq -r --arg ext "$external" '.[$ext].logical.width')
+
+selection=$(printf "1:Laptop - right, External - left\n2:Laptop - left, External - right (default)" | fzf)
+
+[[ -z "$selection" ]] && exit 0
+
+selection_id=$(echo "$selection" | cut -d ":" -f1)
+
+case "$selection_id" in
+    *"1")
+        niri msg output eDP-1 position set "$external_width" 0
+        niri msg output "$external" position set 0 0
+        echo "Laptop display is on the right. External Display is on the left."
+        ;;
+    *"2")
+        # default position
+        niri msg output eDP-1 position auto
+        niri msg output "$external" position auto
+        echo "Laptop display is on the left. External Display is on the right."
+        ;;
+esac
+
+# focus laptop display
+niri msg action focus-monitor eDP-1
