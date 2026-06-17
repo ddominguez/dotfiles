@@ -72,6 +72,9 @@ output "Samsung Electric Company SMB2330H 0x5A314D58" {
     mode "1920x1080"
     scale 1
     transform "normal"
+    layout {
+      default-column-width { proportion 1.0; }
+    }
 }
 
 // Settings that influence how windows are positioned and sized.
