@@ -77,12 +77,22 @@ output "Samsung Electric Company SMB2330H 0x5A314D58" {
     }
 }
 
+output "Dell Inc. DELL S2725DC DW3LKH4" {
+    mode "2560x1440"
+    scale 1
+    transform "normal"
+    variable-refresh-rate
+    layout {
+      default-column-width { proportion 1.0; }
+    }
+}
+
 // Settings that influence how windows are positioned and sized.
 // Find more information on the wiki:
 // https://yalter.github.io/niri/Configuration:-Layout
 layout {
     background-color "#222222"
-    // gaps 5
+    gaps 10
     center-focused-column "on-overflow"
     always-center-single-column
     default-column-width { proportion 0.75; }
@@ -301,6 +311,8 @@ binds {
     Mod+7 { focus-workspace 7; }
     Mod+8 { focus-workspace 8; }
     Mod+9 { focus-workspace 9; }
+
+    // Alternatively, there are commands to move just a single window:
     Mod+Ctrl+1 { move-column-to-workspace 1; }
     Mod+Ctrl+2 { move-column-to-workspace 2; }
     Mod+Ctrl+3 { move-column-to-workspace 3; }
@@ -310,12 +322,6 @@ binds {
     Mod+Ctrl+7 { move-column-to-workspace 7; }
     Mod+Ctrl+8 { move-column-to-workspace 8; }
     Mod+Ctrl+9 { move-column-to-workspace 9; }
-
-    // Alternatively, there are commands to move just a single window:
-    // Mod+Ctrl+1 { move-window-to-workspace 1; }
-
-    // Switches focus between the current and the previous workspace.
-    // Mod+Tab { focus-workspace-previous; }
 
     // The following binds move the focused window in and out of a column.
     // If the window is alone, they will consume it into the nearby column to the side.
@@ -364,7 +370,7 @@ binds {
     // Toggle tabbed column display mode.
     // Windows in this column will appear as vertical tabs,
     // rather than stacked on top of each other.
-    Mod+W { toggle-column-tabbed-display; }
+    // Mod+W { toggle-column-tabbed-display; }
 
     // Actions to switch layouts.
     // Note: if you uncomment these, make sure you do NOT have
