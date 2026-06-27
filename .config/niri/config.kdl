@@ -78,12 +78,11 @@ output "Samsung Electric Company SMB2330H 0x5A314D58" {
 }
 
 output "Dell Inc. DELL S2725DC DW3LKH4" {
-    mode "2560x1440"
+    mode "2560x1440@59.951"
     scale 1
     transform "normal"
-    variable-refresh-rate
     layout {
-      default-column-width { proportion 1.0; }
+      default-column-width { proportion 0.75; }
     }
 }
 
